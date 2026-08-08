@@ -7,17 +7,17 @@
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-deep: #121212;
-            --bg-sidebar: #1a1a1a;
-            --bg-card: #242424;
-            --bg-card-hover: #2e2e2e;
-            --accent: #facc15;
-            --accent-glow: rgba(250, 204, 21, 0.25);
-            --accent-hover: #eab308;
-            --text-main: #ffffff;
-            --text-muted: #d4d4d8;
-            --border: #3f3f46;
-            --border-focus: #71717a;
+            --bg-deep: #09090b;
+            --bg-sidebar: #121216;
+            --bg-card: #18181b;
+            --bg-card-hover: #212126;
+            --accent: #dc2626;
+            --accent-glow: rgba(220, 38, 38, 0.25);
+            --accent-hover: #b91c1c;
+            --text-main: #f4f4f5;
+            --text-muted: #a1a1aa;
+            --border: #27272a;
+            --border-focus: #3f3f46;
             --status-online: #10b981;
             --money: #22c55e;
             --gold: #f59e0b;
@@ -105,9 +105,9 @@
         }
 
         .nav-item.active {
-            background: linear-gradient(135deg, rgba(250, 204, 21, 0.15), rgba(250, 204, 21, 0.02));
+            background: linear-gradient(135deg, rgba(220, 38, 38, 0.1), rgba(220, 38, 38, 0.02));
             color: var(--accent);
-            border-color: rgba(250, 204, 21, 0.3);
+            border-color: rgba(220, 38, 38, 0.2);
         }
 
         .nav-item.active svg {
@@ -258,7 +258,7 @@
             top: 12px;
             right: 12px;
             background-color: var(--accent);
-            color: #121212;
+            color: white;
             font-size: 10px;
             font-weight: 800;
             padding: 3px 8px;
@@ -311,7 +311,7 @@
         .verified-creator-badge svg {
             width: 7px;
             height: 7px;
-            stroke: #121212;
+            stroke: white;
             stroke-width: 3;
             fill: none;
         }
@@ -371,8 +371,8 @@
 
         .stat-item.disliked {
             color: var(--accent);
-            border-color: rgba(250, 204, 21, 0.3);
-            background-color: rgba(250, 204, 21, 0.1);
+            border-color: rgba(220, 38, 38, 0.3);
+            background-color: rgba(220, 38, 38, 0.1);
         }
         .stat-item.disliked svg {
             fill: var(--accent);
@@ -804,7 +804,7 @@
 
         .buy-btn {
             background-color: var(--accent);
-            color: #121212;
+            color: white;
             border: none;
             border-radius: 8px;
             padding: 8px 14px;
@@ -914,8 +914,8 @@
         }
 
         .rebirth-btn {
-            background: linear-gradient(135deg, #facc15, #eab308);
-            color: #121212;
+            background: linear-gradient(135deg, #dc2626, #b91c1c);
+            color: white;
             border: none;
             border-radius: 12px;
             padding: 12px 24px;
@@ -923,13 +923,13 @@
             font-weight: 700;
             cursor: pointer;
             transition: all 0.2s;
-            box-shadow: 0 4px 14px rgba(250, 204, 21, 0.3);
+            box-shadow: 0 4px 14px rgba(220, 38, 38, 0.3);
             margin-top: 10px;
         }
 
         .rebirth-btn:hover:not(:disabled) {
             transform: translateY(-1px);
-            background: linear-gradient(135deg, #eab308, #ca8a04);
+            background: linear-gradient(135deg, #b91c1c, #991b1b);
         }
 
         .rebirth-btn:disabled {
@@ -1054,7 +1054,7 @@
             position: absolute;
             top: 0; left: 0; right: 0;
             height: 100px;
-            background: linear-gradient(135deg, rgba(250, 204, 21, 0.15), transparent);
+            background: linear-gradient(135deg, rgba(220, 38, 38, 0.15), transparent);
             z-index: 0;
         }
 
@@ -1144,7 +1144,7 @@
         .verified-badge svg {
             width: 11px;
             height: 11px;
-            stroke: #121212;
+            stroke: white;
             stroke-width: 3;
             fill: none;
         }
@@ -1235,7 +1235,7 @@
 
         .save-btn {
             background-color: var(--accent);
-            color: #121212;
+            color: white;
             border: none;
             border-radius: 12px;
             padding: 14px;
@@ -1338,7 +1338,7 @@
 
         input:checked + .slider:before {
             transform: translateX(24px);
-            background-color: #121212;
+            background-color: white;
         }
 
         .import-export-row {
@@ -1368,7 +1368,7 @@
         .action-btn.primary {
             background-color: var(--accent);
             border-color: var(--accent);
-            color: #121212;
+            color: white;
             box-shadow: 0 2px 10px var(--accent-glow);
         }
 
@@ -1437,10 +1437,6 @@
                 <div class="nav-item" onclick="switchTab('settings', this)">
                     <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06-.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
                     Settings
-                </div>
-                <div class="nav-item" onclick="switchTab('event', this)">
-                    <svg viewBox="0 0 24 24"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
-                    Event
                 </div>
             </div>
         </div>
@@ -1723,23 +1719,6 @@
             </div>
         </div>
 
-        <!-- EVENT TAB -->
-        <div id="event-tab" class="tab-content">
-            <div class="section-header">
-                <h1 class="section-title">Summer Event 2026</h1>
-                <p class="section-desc">Participate in our special community event and connect with others.</p>
-            </div>
-
-            <div class="settings-grid">
-                <div class="setting-card" style="align-items: center; text-align: center; gap: 20px;">
-                    <div class="setting-desc" style="font-size: 15px;">Join our Discord and nominate your favorite game!</div>
-                    <a href="https://discord.gg/nM3XTdZFqc" target="_blank" style="display: inline-flex; align-items: center; justify-content: center; width: 64px; height: 64px; background-color: var(--bg-deep); border: 1px solid var(--border); border-radius: 16px; color: white; transition: all 0.2s;" onmouseover="this.style.borderColor='var(--border-focus)'; this.style.transform='translateY(-2px)'" onmouseout="this.style.borderColor='var(--border)'; this.style.transform='translateY(0)'">
-                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 5.5a16.04 16.04 0 0 0-4.22-1.32.27.27 0 0 0-.25.13 11.23 11.23 0 0 0-.5 1.05 14.85 14.85 0 0 0-4.56 0 11.66 11.66 0 0 0-.5-1.05.27.27 0 0 0-.26-.13A16.09 16.09 0 0 0 3.5 5.5a.28.28 0 0 0-.12.11C1.04 9.17 0.4 12.7 0.73 16.21a.29.29 0 0 0 .11.21 16.27 16.27 0 0 0 4.97 2.51.27.27 0 0 0 .29-.1 11.59 11.59 0 0 0 1.02-1.5.27.27 0 0 0-.15-.37 10.66 10.66 0 0 1-1.63-.77.27.27 0 0 1-.03-.38c.11-.08.22-.17.32-.26a.27.27 0 0 1 .28-.04 11.75 11.75 0 0 0 9.88 0 .27.27 0 0 1 .28.04c.1.09.21.18.32.26a.27.27 0 0 1-.03.38 10.82 10.82 0 0 1-1.63.77.27.27 0 0 0-.15.37 11.45 11.45 0 0 0 1.02 1.5.27.27 0 0 0 .29.1 16.32 16.32 0 0 0 4.97-2.51.27.27 0 0 0 .11-.21c.4-4.18-.67-7.72-2.88-10.6a.29.29 0 0 0-.12-.11ZM8.5 13.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3Zm7 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3Z"/></svg>
-                    </a>
-                </div>
-            </div>
-        </div>
-
         <!-- GAME PLAYSCREEN -->
         <div id="game-playscreen">
             <div class="game-topbar">
@@ -1774,7 +1753,7 @@
                         </div>
                         <div class="pet-stat-card">
                             <span class="pet-stat-label">Rebirths</span>
-                            <span class="pet-stat-value" id="stat-pet-rebirths" style="color: var(--accent);">0</span>
+                            <span class="pet-stat-value" id="stat-pet-rebirths" style="color: #dc2626;">0</span>
                         </div>
                     </div>
 
@@ -2684,7 +2663,7 @@
                 document.getElementById('guess-game-view').style.display = 'none';
                 document.getElementById('capy-game-view').style.display = 'grid';
                 document.getElementById('fat-game-view').style.display = 'none';
-                updateCapyUI();
+                startGameLoop('capy');
             } else if (gameKey === 'fat') {
                 document.getElementById('active-game-title').textContent = '🍖 Eat to be an Fat';
                 document.getElementById('pet-topbar-stats').style.display = 'none';
@@ -2695,17 +2674,14 @@
                 document.getElementById('guess-game-view').style.display = 'none';
                 document.getElementById('capy-game-view').style.display = 'none';
                 document.getElementById('fat-game-view').style.display = 'grid';
-                updateFatUI();
+                startGameLoop('fat');
             }
-
-            if (gameInterval) clearInterval(gameInterval);
-            gameInterval = setInterval(gameLoop, 1000);
         }
 
         function exitGameToHub() {
             if (gameInterval) clearInterval(gameInterval);
-            document.getElementById('game-playscreen').classList.remove('active');
             document.getElementById('ingame-modal').classList.remove('active');
+            document.getElementById('game-playscreen').classList.remove('active');
             document.getElementById('main-sidebar').style.display = 'flex';
             saveToLocalStorage();
         }
@@ -2715,70 +2691,100 @@
             modal.classList.toggle('active');
         }
 
-        // PET GAME LOGIC
+        window.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                const playscreen = document.getElementById('game-playscreen');
+                if (playscreen.classList.contains('active')) {
+                    toggleGameMenu();
+                }
+            }
+        });
+
+        /* PET TAP GAME LOGIC */
         function clickPet() {
+            initAudio();
             playSound('click');
             const currentPet = PET_LIST[appData.petGame.currentPetIndex];
-            appData.petGame.taps += currentPet.tapPower;
+            const multiplier = Math.pow(2, appData.petGame.rebirths);
+            appData.petGame.taps += currentPet.tapPower * multiplier;
             updatePetUI();
-            if (appData.autoSave) saveToLocalStorage();
         }
 
-        function doRebirth() {
-            if (appData.petGame.taps >= appData.petGame.rebirthCost) {
+        function buyPet(index) {
+            initAudio();
+            const pg = appData.petGame;
+            const pet = PET_LIST[index];
+            if (pg.taps >= pet.cost && !pg.ownedPets.includes(index)) {
                 playSound('buy');
-                appData.petGame.taps = 0;
-                appData.petGame.rebirths += 1;
-                appData.petGame.rebirthCost = Math.floor(appData.petGame.rebirthCost * 2.5);
+                pg.taps -= pet.cost;
+                pg.ownedPets.push(index);
+                pg.currentPetIndex = index;
                 updatePetUI();
-                showToast('Reborn successfully! Multiplier increased.');
+                saveToLocalStorage();
+            } else if (pg.ownedPets.includes(index)) {
+                playSound('click');
+                pg.currentPetIndex = index;
+                updatePetUI();
                 saveToLocalStorage();
             }
         }
 
-        function buyPet(index) {
-            const pet = PET_LIST[index];
-            if (appData.petGame.taps >= pet.cost && !appData.petGame.ownedPets.includes(index)) {
-                appData.petGame.taps -= pet.cost;
-                appData.petGame.ownedPets.push(index);
-                appData.petGame.currentPetIndex = index;
+        function doRebirth() {
+            initAudio();
+            const pg = appData.petGame;
+            if (pg.taps >= pg.rebirthCost) {
                 playSound('buy');
+                pg.rebirths += 1;
+                pg.taps = 0;
+                pg.currentPetIndex = 0;
+                pg.ownedPets = [0];
+                pg.rebirthCost *= 2;
                 updatePetUI();
-                showToast('Unlocked & equipped ' + pet.name + '!');
                 saveToLocalStorage();
-            } else if (appData.petGame.ownedPets.includes(index)) {
-                appData.petGame.currentPetIndex = index;
-                playSound('click');
-                updatePetUI();
-                showToast('Equipped ' + pet.name + '!');
-                saveToLocalStorage();
+                showToast('Rebirth successful! Taps and pets reset.');
             }
         }
 
         function updatePetUI() {
-            document.getElementById('stat-pet-taps').textContent = appData.petGame.taps.toLocaleString();
-            document.getElementById('pet-taps-display').textContent = appData.petGame.taps.toLocaleString() + ' Taps';
-            document.getElementById('stat-pet-rebirths').textContent = appData.petGame.rebirths;
+            const pg = appData.petGame;
+            if (!pg.ownedPets) {
+                pg.ownedPets = [0];
+            }
+            if (pg.rebirthCost === undefined) {
+                pg.rebirthCost = 1000;
+            }
+            const currentPet = PET_LIST[pg.currentPetIndex];
 
-            const currentPet = PET_LIST[appData.petGame.currentPetIndex];
-            document.getElementById('pet-big-avatar').textContent = currentPet.emoji;
+            document.getElementById('pet-taps-display').textContent = pg.taps.toLocaleString() + ' Taps';
+            document.getElementById('stat-pet-taps').textContent = pg.taps.toLocaleString();
+            document.getElementById('stat-pet-rebirths').textContent = pg.rebirths;
             document.getElementById('current-pet-name').textContent = currentPet.name;
+            document.getElementById('pet-big-avatar').textContent = currentPet.emoji;
 
             const rebirthBtn = document.getElementById('btn-rebirth');
-            rebirthBtn.textContent = `Rebirth (Requires ${appData.petGame.rebirthCost.toLocaleString()} Taps)`;
-            if (appData.petGame.taps >= appData.petGame.rebirthCost) {
+            rebirthBtn.textContent = `Rebirth (Requires ${pg.rebirthCost.toLocaleString()} Taps)`;
+            if (pg.taps >= pg.rebirthCost) {
                 rebirthBtn.disabled = false;
             } else {
                 rebirthBtn.disabled = true;
             }
 
             let shopHtml = '';
-            PET_LIST.forEach((pet, index) => {
-                const isOwned = appData.petGame.ownedPets.includes(index);
-                const isEquipped = appData.petGame.currentPetIndex === index;
-
-                let btnText = isEquipped ? 'Equipped' : (isOwned ? 'Equip' : `${pet.cost.toLocaleString()} Taps`);
-                let btnDisabled = !isOwned && appData.petGame.taps < pet.cost;
+            PET_LIST.forEach((pet, idx) => {
+                const isOwned = pg.ownedPets.includes(idx);
+                const isEquipped = pg.currentPetIndex === idx;
+                
+                let btnText = 'Buy';
+                let btnDisabled = false;
+                if (isEquipped) {
+                    btnText = 'Equipped';
+                    btnDisabled = true;
+                } else if (isOwned) {
+                    btnText = 'Equip';
+                } else {
+                    btnText = pet.cost.toLocaleString() + ' Taps';
+                    if (pg.taps < pet.cost) btnDisabled = true;
+                }
 
                 shopHtml += `
                     <div class="shop-item">
@@ -2787,13 +2793,13 @@
                                 <div class="shop-item-icon">${pet.emoji}</div>
                                 <div>
                                     <div class="shop-item-name">${pet.name}</div>
-                                    <div class="shop-item-desc">+${pet.tapPower} tap power</div>
+                                    <div class="shop-item-desc">+${pet.tapPower} Taps / click</div>
                                 </div>
                             </div>
                         </div>
                         <div class="shop-item-row">
-                            <span class="shop-item-price">${isOwned ? 'Owned' : pet.cost.toLocaleString() + ' Taps'}</span>
-                            <button class="buy-btn" ${isEquipped ? 'disabled' : ''} onclick="buyPet(${index})" ${btnDisabled && !isOwned ? 'disabled' : ''}>${btnText}</button>
+                            <span class="shop-item-price" style="color: white;">${pet.cost === 0 ? 'Free' : pet.cost.toLocaleString() + ' Taps'}</span>
+                            <button class="buy-btn" ${btnDisabled && !isOwned ? 'disabled' : ''} onclick="buyPet(${idx})">${btnText}</button>
                         </div>
                     </div>
                 `;
@@ -2801,74 +2807,79 @@
             document.getElementById('pet-shop-list').innerHTML = shopHtml;
         }
 
-        // GUESS THE NUMBER LOGIC
+        /* GUESS THE NUMBER GAME LOGIC */
         function submitGuess() {
+            initAudio();
             const inputEl = document.getElementById('guess-number-input');
+            const feedbackEl = document.getElementById('guess-feedback-text');
             const val = parseInt(inputEl.value);
-            const feedback = document.getElementById('guess-feedback-text');
 
             if (isNaN(val)) {
-                feedback.textContent = 'Please enter a valid number!';
+                feedbackEl.textContent = "Please enter a valid number!";
                 return;
             }
 
-            if (val === appData.guessGame.targetNumber) {
+            const gg = appData.guessGame;
+            if (val === gg.targetNumber) {
                 playSound('correct');
-                appData.guessGame.points += 10;
-                feedback.textContent = `🎉 Correct! The number was ${appData.guessGame.targetNumber}. +10 Points! New number generated.`;
-                appData.guessGame.targetNumber = Math.floor(Math.random() * 100) + 1;
+                gg.points += 10;
+                feedbackEl.textContent = `Correct! The number was ${gg.targetNumber}. +10 Points! New number picked.`;
+                gg.targetNumber = Math.floor(Math.random() * 100) + 1;
                 inputEl.value = '';
                 updateGuessUI();
                 saveToLocalStorage();
-            } else if (val < appData.guessGame.targetNumber) {
+            } else if (val < gg.targetNumber) {
                 playSound('click');
-                feedback.textContent = `📈 Too low! Try a higher number.`;
+                feedbackEl.textContent = `Too low! Try a higher number.`;
             } else {
                 playSound('click');
-                feedback.textContent = `📉 Too high! Try a lower number.`;
+                feedbackEl.textContent = `Too high! Try a lower number.`;
             }
         }
 
         function updateGuessUI() {
-            document.getElementById('guess-points-display').textContent = `Points: ${appData.guessGame.points}`;
+            document.getElementById('guess-points-display').textContent = 'Points: ' + appData.guessGame.points;
         }
 
-        // CAPYBARA GAME LOGIC
+        /* BUY A CAPYBARA GAME LOGIC */
         function clickCapybara() {
+            initAudio();
             playSound('click');
-            const clickPower = 1 + (appData.capyGame.clickerLevel * 2);
-            appData.capyGame.money += clickPower;
+            appData.capyGame.money += appData.capyGame.clickPower;
             updateCapyUI();
-            if (appData.autoSave) saveToLocalStorage();
         }
 
         function buyItem(itemKey) {
-            let price = 0;
-            if (itemKey === 'capy') price = appData.capyGame.prices.capy;
-            if (itemKey === 'gold') price = appData.capyGame.prices.gold;
-            if (itemKey === 'spa') price = appData.capyGame.prices.spa;
-            if (itemKey === 'galaxy') price = appData.capyGame.prices.galaxy;
-            if (itemKey === 'clicker') price = appData.capyGame.prices.clicker;
+            initAudio();
+            const cg = appData.capyGame;
+            let cost = 0;
 
-            if (appData.capyGame.money >= price) {
-                appData.capyGame.money -= price;
+            if (itemKey === 'capy') cost = cg.prices.capy;
+            else if (itemKey === 'gold') cost = cg.prices.gold;
+            else if (itemKey === 'spa') cost = cg.prices.spa;
+            else if (itemKey === 'galaxy') cost = cg.prices.galaxy;
+            else if (itemKey === 'clicker') cost = cg.prices.clicker;
+
+            if (cg.money >= cost) {
                 playSound('buy');
+                cg.money -= cost;
 
                 if (itemKey === 'capy') {
-                    appData.capyGame.capyCount++;
-                    appData.capyGame.prices.capy = Math.floor(price * 1.15);
+                    cg.capyCount++;
+                    cg.prices.capy = Math.round(cg.prices.capy * 1.15);
                 } else if (itemKey === 'gold') {
-                    appData.capyGame.goldCount++;
-                    appData.capyGame.prices.gold = Math.floor(price * 1.15);
+                    cg.goldCount++;
+                    cg.prices.gold = Math.round(cg.prices.gold * 1.17);
                 } else if (itemKey === 'spa') {
-                    appData.capyGame.spaCount++;
-                    appData.capyGame.prices.spa = Math.floor(price * 1.15);
+                    cg.spaCount++;
+                    cg.prices.spa = Math.round(cg.prices.spa * 1.20);
                 } else if (itemKey === 'galaxy') {
-                    appData.capyGame.galaxyCount++;
-                    appData.capyGame.prices.galaxy = Math.floor(price * 1.15);
+                    cg.galaxyCount++;
+                    cg.prices.galaxy = Math.round(cg.prices.galaxy * 1.22);
                 } else if (itemKey === 'clicker') {
-                    appData.capyGame.clickerLevel++;
-                    appData.capyGame.prices.clicker = Math.floor(price * 1.5);
+                    cg.clickerLevel++;
+                    cg.clickPower += 2;
+                    cg.prices.clicker = Math.round(cg.prices.clicker * 1.30);
                 }
 
                 updateCapyUI();
@@ -2877,55 +2888,57 @@
         }
 
         function updateCapyUI() {
-            document.getElementById('capy-money-display').textContent = '$' + appData.capyGame.money.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
-            document.getElementById('stat-capy-count').textContent = appData.capyGame.capyCount + appData.capyGame.goldCount + appData.capyGame.spaCount + appData.capyGame.galaxyCount;
+            const cg = appData.capyGame;
+            document.getElementById('capy-money-display').textContent = '$' + cg.money.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2});
+            document.getElementById('stat-capy-count').textContent = (cg.capyCount + cg.goldCount + cg.spaCount + cg.galaxyCount);
+            document.getElementById('click-power-val').textContent = '+$' + cg.clickPower + '.00';
 
-            const cps = (appData.capyGame.capyCount * 5) + (appData.capyGame.goldCount * 35) + (appData.capyGame.spaCount * 180) + (appData.capyGame.galaxyCount * 950);
-            document.getElementById('stat-capy-cps').textContent = '$' + cps.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2}) + '/s';
+            const cps = (cg.capyCount * 5) + (cg.goldCount * 35) + (cg.spaCount * 180) + (cg.galaxyCount * 950);
+            document.getElementById('stat-capy-cps').textContent = '$' + cps.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2}) + '/s';
 
-            const clickPower = 1 + (appData.capyGame.clickerLevel * 2);
-            document.getElementById('click-power-val').textContent = '+$' + clickPower.toFixed(2);
+            document.getElementById('price-capy').textContent = '$' + cg.prices.capy.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2});
+            document.getElementById('price-gold').textContent = '$' + cg.prices.gold.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2});
+            document.getElementById('price-spa').textContent = '$' + cg.prices.spa.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2});
+            document.getElementById('price-galaxy').textContent = '$' + cg.prices.galaxy.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2});
+            document.getElementById('price-clicker').textContent = '$' + cg.prices.clicker.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2});
 
-            document.getElementById('price-capy').textContent = '$' + appData.capyGame.prices.capy.toLocaleString('en-US', {minimumFractionDigits: 2});
-            document.getElementById('price-gold').textContent = '$' + appData.capyGame.prices.gold.toLocaleString('en-US', {minimumFractionDigits: 2});
-            document.getElementById('price-spa').textContent = '$' + appData.capyGame.prices.spa.toLocaleString('en-US', {minimumFractionDigits: 2});
-            document.getElementById('price-galaxy').textContent = '$' + appData.capyGame.prices.galaxy.toLocaleString('en-US', {minimumFractionDigits: 2});
-            document.getElementById('price-clicker').textContent = '$' + appData.capyGame.prices.clicker.toLocaleString('en-US', {minimumFractionDigits: 2});
-
-            document.getElementById('btn-buy-capy').disabled = appData.capyGame.money < appData.capyGame.prices.capy;
-            document.getElementById('btn-buy-gold').disabled = appData.capyGame.money < appData.capyGame.prices.gold;
-            document.getElementById('btn-buy-spa').disabled = appData.capyGame.money < appData.capyGame.prices.spa;
-            document.getElementById('btn-buy-galaxy').disabled = appData.capyGame.money < appData.capyGame.prices.galaxy;
-            document.getElementById('btn-buy-clicker').disabled = appData.capyGame.money < appData.capyGame.prices.clicker;
+            document.getElementById('btn-buy-capy').disabled = cg.money < cg.prices.capy;
+            document.getElementById('btn-buy-gold').disabled = cg.money < cg.prices.gold;
+            document.getElementById('btn-buy-spa').disabled = cg.money < cg.prices.spa;
+            document.getElementById('btn-buy-galaxy').disabled = cg.money < cg.prices.galaxy;
+            document.getElementById('btn-buy-clicker').disabled = cg.money < cg.prices.clicker;
         }
 
-        // FAT GAME LOGIC
+        /* EAT TO BE AN FAT GAME LOGIC */
         function clickFood() {
+            initAudio();
             playSound('click');
-            const power = 1 + (appData.fatGame.biteLevel * 2);
-            appData.fatGame.kg += power;
+            appData.fatGame.kg += appData.fatGame.clickPower;
             updateFatUI();
-            if (appData.autoSave) saveToLocalStorage();
         }
 
         function buyMeat(key) {
-            let price = appData.fatGame.prices[key];
-            if (appData.fatGame.kg >= price) {
-                appData.fatGame.kg -= price;
+            initAudio();
+            const fg = appData.fatGame;
+            let cost = fg.prices[key];
+
+            if (fg.kg >= cost) {
                 playSound('buy');
+                fg.kg -= cost;
 
                 if (key === 'burger') {
-                    appData.fatGame.burgerCount++;
-                    appData.fatGame.prices.burger = Math.floor(price * 1.15);
+                    fg.burgerCount++;
+                    fg.prices.burger = Math.round(fg.prices.burger * 1.15);
                 } else if (key === 'steak') {
-                    appData.fatGame.steakCount++;
-                    appData.fatGame.prices.steak = Math.floor(price * 1.15);
+                    fg.steakCount++;
+                    fg.prices.steak = Math.round(fg.prices.steak * 1.17);
                 } else if (key === 'feast') {
-                    appData.fatGame.feastCount++;
-                    appData.fatGame.prices.feast = Math.floor(price * 1.15);
+                    fg.feastCount++;
+                    fg.prices.feast = Math.round(fg.prices.feast * 1.20);
                 } else if (key === 'bite') {
-                    appData.fatGame.biteLevel++;
-                    appData.fatGame.prices.bite = Math.floor(price * 1.5);
+                    fg.biteLevel++;
+                    fg.clickPower += 2;
+                    fg.prices.bite = Math.round(fg.prices.bite * 1.30);
                 }
 
                 updateFatUI();
@@ -2934,59 +2947,59 @@
         }
 
         function updateFatUI() {
-            document.getElementById('stat-fat-kg').textContent = appData.fatGame.kg.toFixed(1) + ' kg';
-            document.getElementById('fat-kg-display').textContent = appData.fatGame.kg.toFixed(1) + ' kg';
+            const fg = appData.fatGame;
+            document.getElementById('fat-kg-display').textContent = fg.kg.toLocaleString(undefined, {minimumFractionDigits: 1, maximumFractionDigits: 1}) + ' kg';
+            document.getElementById('stat-fat-kg').textContent = fg.kg.toLocaleString(undefined, {minimumFractionDigits: 1, maximumFractionDigits: 1}) + ' kg';
+            document.getElementById('fat-power-val').textContent = '+' + fg.clickPower + ' kg';
 
-            const kps = (appData.fatGame.burgerCount * 2) + (appData.fatGame.steakCount * 10) + (appData.fatGame.feastCount * 50);
-            document.getElementById('stat-fat-kps').textContent = kps.toFixed(1) + ' kg/s';
+            const kps = (fg.burgerCount * 2) + (fg.steakCount * 10) + (fg.feastCount * 50);
+            document.getElementById('stat-fat-kps').textContent = kps.toLocaleString(undefined, {minimumFractionDigits: 1, maximumFractionDigits: 1}) + ' kg/s';
 
-            const clickPower = 1 + (appData.fatGame.biteLevel * 2);
-            document.getElementById('fat-power-val').textContent = '+' + clickPower + ' kg';
+            document.getElementById('fat-price-burger').textContent = fg.prices.burger.toLocaleString() + ' kg';
+            document.getElementById('fat-price-steak').textContent = fg.prices.steak.toLocaleString() + ' kg';
+            document.getElementById('fat-price-feast').textContent = fg.prices.feast.toLocaleString() + ' kg';
+            document.getElementById('fat-price-bite').textContent = fg.prices.bite.toLocaleString() + ' kg';
 
-            document.getElementById('fat-price-burger').textContent = appData.fatGame.prices.burger.toLocaleString() + ' kg';
-            document.getElementById('fat-price-steak').textContent = appData.fatGame.prices.steak.toLocaleString() + ' kg';
-            document.getElementById('fat-price-feast').textContent = appData.fatGame.prices.feast.toLocaleString() + ' kg';
-            document.getElementById('fat-price-bite').textContent = appData.fatGame.prices.bite.toLocaleString() + ' kg';
-
-            document.getElementById('btn-buy-burger').disabled = appData.fatGame.kg < appData.fatGame.prices.burger;
-            document.getElementById('btn-buy-steak').disabled = appData.fatGame.kg < appData.fatGame.prices.steak;
-            document.getElementById('btn-buy-feast').disabled = appData.fatGame.kg < appData.fatGame.prices.feast;
-            document.getElementById('btn-buy-bite').disabled = appData.fatGame.kg < appData.fatGame.prices.bite;
+            document.getElementById('btn-buy-burger').disabled = fg.kg < fg.prices.burger;
+            document.getElementById('btn-buy-steak').disabled = fg.kg < fg.prices.steak;
+            document.getElementById('btn-buy-feast').disabled = fg.kg < fg.prices.feast;
+            document.getElementById('btn-buy-bite').disabled = fg.kg < fg.prices.bite;
         }
 
-        // UNIVERSAL GAME TICK LOOP
-        function gameLoop() {
-            // Capy CPS Income
-            const capyCps = (appData.capyGame.capyCount * 5) + (appData.capyGame.goldCount * 35) + (appData.capyGame.spaCount * 180) + (appData.capyGame.galaxyCount * 950);
-            if (capyCps > 0) {
-                appData.capyGame.money += capyCps;
-                if (document.getElementById('capy-game-view').style.display === 'grid') {
-                    updateCapyUI();
+        function startGameLoop(gameKey) {
+            if (gameInterval) clearInterval(gameInterval);
+            
+            gameInterval = setInterval(() => {
+                if (gameKey === 'capy') {
+                    const cg = appData.capyGame;
+                    const cps = (cg.capyCount * 5) + (cg.goldCount * 35) + (cg.spaCount * 180) + (cg.galaxyCount * 950);
+                    if (cps > 0) {
+                        cg.money += cps / 10;
+                        updateCapyUI();
+                    }
+                } else if (gameKey === 'fat') {
+                    const fg = appData.fatGame;
+                    const kps = (fg.burgerCount * 2) + (fg.steakCount * 10) + (fg.feastCount * 50);
+                    if (kps > 0) {
+                        fg.kg += kps / 10;
+                        updateFatUI();
+                    }
                 }
-            }
-
-            // Fat KPS Income
-            const fatKps = (appData.fatGame.burgerCount * 2) + (appData.fatGame.steakCount * 10) + (appData.fatGame.feastCount * 50);
-            if (fatKps > 0) {
-                appData.fatGame.kg += fatKps;
-                if (document.getElementById('fat-game-view').style.display === 'grid') {
-                    updateFatUI();
-                }
-            }
+            }, 100);
         }
 
-        // SAVE CODE EXPORT / IMPORT
+        /* BACKUP & EXPORT FUNCTIONS */
         function generateSaveCode() {
             const jsonStr = JSON.stringify(appData);
             const encoded = btoa(encodeURIComponent(jsonStr));
             document.getElementById('save-code-box').value = encoded;
-            showToast('Export code generated successfully!');
+            showToast('Save code generated successfully!');
         }
 
         function importSaveCode() {
             const code = document.getElementById('save-code-box').value.trim();
             if (!code) {
-                showToast('Please enter a save code to import!');
+                showToast('Please paste a valid save code first!');
                 return;
             }
             try {
@@ -2999,7 +3012,7 @@
                 updateFatUI();
                 updateGuessUI();
                 saveToLocalStorage();
-                showToast('Save code imported successfully!');
+                showToast('Save data imported successfully!');
             } catch(e) {
                 showToast('Invalid save code format!');
             }
