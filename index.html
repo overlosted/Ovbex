@@ -436,6 +436,71 @@
             margin-bottom: 20px;
         }
 
+        /* GROUPS TAB STYLES */
+        .groups-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+        }
+
+        .group-card {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            overflow: hidden;
+            transition: all 0.2s;
+            display: flex;
+            flex-direction: column;
+            padding: 20px;
+            gap: 16px;
+            position: relative;
+        }
+
+        .group-card:hover {
+            border-color: var(--border-focus);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+
+        .group-info-header {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .group-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            background-color: var(--bg-deep);
+            border: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            flex-shrink: 0;
+        }
+
+        .group-details {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .group-name {
+            font-size: 18px;
+            font-weight: 700;
+            color: white;
+        }
+
+        .group-creator {
+            font-size: 13px;
+            color: var(--text-muted);
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
         /* GAME PLAYSCREEN CONTAINER */
         #game-playscreen {
             position: absolute;
@@ -777,6 +842,101 @@
             gap: 24px;
             overflow-y: auto;
             border-right: 1px solid var(--border);
+        }
+
+        /* PET TAP GAME INTERIOR */
+        .pet-game-container {
+            flex: 1;
+            display: grid;
+            grid-template-columns: 1fr 340px;
+            background-color: var(--bg-deep);
+            overflow: hidden;
+        }
+
+        .pet-main-view {
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+            overflow-y: auto;
+            border-right: 1px solid var(--border);
+            position: relative;
+        }
+
+        .pet-big-display {
+            font-size: 110px;
+            cursor: pointer;
+            user-select: none;
+            transition: transform 0.1s;
+            filter: drop-shadow(0 10px 20px rgba(0,0,0,0.5));
+            animation: floatPet 3s ease-in-out infinite;
+        }
+
+        @keyframes floatPet {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-8px); }
+        }
+
+        .pet-big-display:active {
+            transform: scale(0.92);
+        }
+
+        .pet-stats-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            width: 100%;
+            max-width: 400px;
+        }
+
+        .pet-stat-card {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 14px;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .pet-stat-label {
+            font-size: 12px;
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+
+        .pet-stat-value {
+            font-size: 18px;
+            font-weight: 800;
+            color: white;
+        }
+
+        .rebirth-btn {
+            background: linear-gradient(135deg, #dc2626, #b91c1c);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            padding: 12px 24px;
+            font-size: 14px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s;
+            box-shadow: 0 4px 14px rgba(220, 38, 38, 0.3);
+            margin-top: 10px;
+        }
+
+        .rebirth-btn:hover:not(:disabled) {
+            transform: translateY(-1px);
+            background: linear-gradient(135deg, #b91c1c, #991b1b);
+        }
+
+        .rebirth-btn:disabled {
+            background: var(--border);
+            color: var(--text-muted);
+            cursor: not-allowed;
+            box-shadow: none;
         }
 
         /* GUESS THE NUMBER GAME INTERIOR */
@@ -1266,6 +1426,10 @@
                     <svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
                     Games
                 </div>
+                <div class="nav-item" onclick="switchTab('groups', this)">
+                    <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+                    Groups
+                </div>
                 <div class="nav-item" onclick="switchTab('profile', this)">
                     <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
                     Profile
@@ -1310,6 +1474,29 @@
 
             <div class="sub-heading">All Games</div>
             <div class="games-grid" id="all-games-grid">
+                <!-- Pet Tap Game Card -->
+                <div class="game-card" onclick="launchGame('pet')">
+                    <div class="game-info">
+                        <div class="game-text-group">
+                            <div class="game-name">😸 Pet Tap</div>
+                            <div class="game-creator">By: Ovbex</div>
+                        </div>
+                        <div class="game-meta-row" onclick="event.stopPropagation()">
+                            <div class="game-stats">
+                                <div class="stat-item" id="pet-card-like-btn" onclick="togglePetLikeGame()" title="Like">
+                                    <svg viewBox="0 0 24 24"><path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"></path></svg>
+                                </div>
+                                <div class="stat-item" id="pet-card-dislike-btn" onclick="togglePetDislikeGame()" title="Dislike">
+                                    <svg viewBox="0 0 24 24"><path d="M10 15v4a3 3 0 0 0 3 3l4-9V2H5.72a2 2 0 0 0-2 1.7l-1.38 9a2 2 0 0 0 2 2.3zm7-13h3a2 2 0 0 1 2 2v7a2 2 0 0 1-2 2h-3"></path></svg>
+                                </div>
+                            </div>
+                            <button class="favorite-btn" id="pet-card-fav-btn" onclick="togglePetFavoriteGame()" title="Favorite Game">
+                                <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
                 <!-- Guess The Number Game Card -->
                 <div class="game-card" onclick="launchGame('guess')">
                     <div class="game-info">
@@ -1338,7 +1525,7 @@
                     <div class="game-info">
                         <div class="game-text-group">
                             <div class="game-name">Buy A Capybara</div>
-                            <div class="game-creator">By: Artvowaned <span class="verified-creator-badge" title="Verified Creator"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg></span></div>
+                            <div class="game-creator">By: 🗿 Sigma Games</div>
                         </div>
                         <div class="game-meta-row" onclick="event.stopPropagation()">
                             <div class="game-stats">
@@ -1361,7 +1548,7 @@
                     <div class="game-info">
                         <div class="game-text-group">
                             <div class="game-name">🍖 Eat to be an Fat</div>
-                            <div class="game-creator">By: Artvowaned <span class="verified-creator-badge" title="Verified Creator"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg></span></div>
+                            <div class="game-creator">By: 🗿 Sigma Games</div>
                         </div>
                         <div class="game-meta-row" onclick="event.stopPropagation()">
                             <div class="game-stats">
@@ -1375,6 +1562,43 @@
                             <button class="favorite-btn" id="fat-card-fav-btn" onclick="toggleFatFavoriteGame()" title="Favorite Game">
                                 <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
                             </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- GROUPS TAB -->
+        <div id="groups-tab" class="tab-content">
+            <div class="section-header">
+                <h1 class="section-title">Community Groups</h1>
+                <p class="section-desc">Explore official and community groups on Ovbex.</p>
+            </div>
+
+            <div class="groups-grid">
+                <div class="group-card">
+                    <div class="group-info-header">
+                        <div class="group-details">
+                            <div class="group-name">Ovbex</div>
+                            <div class="group-creator">
+                                By: Overlost 
+                                <span class="verified-creator-badge" title="Verified Creator">
+                                    <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="group-card">
+                    <div class="group-info-header">
+                        <div class="group-details">
+                            <div class="group-name">🗿 Sigma Games</div>
+                            <div class="group-creator">
+                                By: Artvowaned 
+                                <span class="verified-creator-badge" title="Verified Creator">
+                                    <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                </span>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -1502,6 +1726,9 @@
                     <svg viewBox="0 0 24 24"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
                 </button>
                 <div class="ingame-title" id="active-game-title">Game</div>
+                <div class="ingame-stats-bar" id="pet-topbar-stats" style="display: none;">
+                    <div class="ingame-money" id="pet-taps-display" style="color: #ffffff; background-color: rgba(255, 255, 255, 0.1); border-color: rgba(255, 255, 255, 0.3);">0 Taps</div>
+                </div>
                 <div class="ingame-stats-bar" id="capy-topbar-stats">
                     <div class="ingame-money" id="capy-money-display">$100.00</div>
                 </div>
@@ -1510,6 +1737,36 @@
                 </div>
                 <div class="ingame-stats-bar" id="guess-topbar-stats" style="display: none;">
                     <div class="ingame-money" id="guess-points-display" style="color: var(--blue-points); background-color: rgba(59, 130, 246, 0.1); border-color: rgba(59, 130, 246, 0.3);">Points: 0</div>
+                </div>
+            </div>
+
+            <!-- PET TAP GAME INTERIOR -->
+            <div class="pet-game-container" id="pet-game-view" style="display: none;">
+                <div class="pet-main-view">
+                    <div class="pet-big-display" id="pet-big-avatar" onclick="clickPet()" title="Click pet!">🐱</div>
+                    <div class="click-power-hint">Click your pet to earn taps! Current Pet: <span id="current-pet-name" style="color: white; font-weight: 700;">Cat</span></div>
+
+                    <div class="pet-stats-grid">
+                        <div class="pet-stat-card">
+                            <span class="pet-stat-label">Total Taps</span>
+                            <span class="pet-stat-value" id="stat-pet-taps" style="color: #ffffff;">0</span>
+                        </div>
+                        <div class="pet-stat-card">
+                            <span class="pet-stat-label">Rebirths</span>
+                            <span class="pet-stat-value" id="stat-pet-rebirths" style="color: #dc2626;">0</span>
+                        </div>
+                    </div>
+
+                    <button class="rebirth-btn" id="btn-rebirth" onclick="doRebirth()" disabled>Rebirth (Requires 1K Taps)</button>
+                </div>
+
+                <div class="capy-shop-sidebar">
+                    <div class="shop-header">
+                        🐾 Pet Shop
+                    </div>
+                    <div class="shop-items-list" id="pet-shop-list">
+                        <!-- Populated dynamically -->
+                    </div>
                 </div>
             </div>
 
@@ -1602,7 +1859,24 @@
                             </div>
                         </div>
 
-                        <!-- Item 4: Click Power Upgrade -->
+                        <!-- Item 4: Galaxy Capybara -->
+                        <div class="shop-item">
+                            <div class="shop-item-row">
+                                <div class="shop-item-info">
+                                    <div class="shop-item-icon">🌌</div>
+                                    <div>
+                                        <div class="shop-item-name">Galaxy Capybara</div>
+                                        <div class="shop-item-desc">Generates $950.00 / sec</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="shop-item-row">
+                                <span class="shop-item-price" id="price-galaxy">$15,000.00</span>
+                                <button class="buy-btn" id="btn-buy-galaxy" onclick="buyItem('galaxy')">Buy</button>
+                            </div>
+                        </div>
+
+                        <!-- Item 5: Click Power Upgrade -->
                         <div class="shop-item">
                             <div class="shop-item-row">
                                 <div class="shop-item-info">
@@ -1746,6 +2020,16 @@
             isLiked: false,
             isDisliked: false,
             isFavorite: false,
+            petGame: {
+                taps: 0,
+                rebirths: 0,
+                currentPetIndex: 0,
+                ownedPets: [0],
+                rebirthCost: 1000,
+                isLiked: false,
+                isDisliked: false,
+                isFavorite: false
+            },
             guessGame: {
                 points: 0,
                 targetNumber: Math.floor(Math.random() * 100) + 1,
@@ -1776,15 +2060,27 @@
                 capyCount: 0,
                 goldCount: 0,
                 spaCount: 0,
+                galaxyCount: 0,
                 clickerLevel: 0,
                 prices: {
                     capy: 100,
                     gold: 650,
                     spa: 3200,
+                    galaxy: 15000,
                     clicker: 250
                 }
             }
         };
+
+        const PET_LIST = [
+            { name: "Cat", emoji: "🐱", cost: 0, tapPower: 1 },
+            { name: "Dog", emoji: "🐶", cost: 50, tapPower: 2 },
+            { name: "Rabbit", emoji: "🐰", cost: 200, tapPower: 5 },
+            { name: "Fox", emoji: "🦊", cost: 750, tapPower: 12 },
+            { name: "Panda", emoji: "🐼", cost: 2500, tapPower: 30 },
+            { name: "Tiger", emoji: "🐯", cost: 10000, tapPower: 75 },
+            { name: "Dragon", emoji: "🐲", cost: 50000, tapPower: 200 }
+        ];
 
         // Web Audio API & Synth Sound Engine for Games
         let audioCtx = null;
@@ -1843,14 +2139,24 @@
                 try {
                     const parsed = JSON.parse(saved);
                     appData = { ...appData, ...parsed };
+                    if (!appData.petGame) {
+                        appData.petGame = { taps: 0, rebirths: 0, currentPetIndex: 0, ownedPets: [0], rebirthCost: 1000, isLiked: false, isDisliked: false, isFavorite: false };
+                    }
+                    if (appData.petGame.rebirthCost === undefined) {
+                        appData.petGame.rebirthCost = 1000;
+                    }
                     if (!appData.guessGame) {
                         appData.guessGame = { points: 0, targetNumber: Math.floor(Math.random() * 100) + 1, isLiked: false, isDisliked: false, isFavorite: false };
                     }
                     if (!appData.capyGame) {
-                        appData.capyGame = { money: 100, clickPower: 1, capyCount: 0, goldCount: 0, spaCount: 0, clickerLevel: 0, prices: { capy: 100, gold: 650, spa: 3200, clicker: 250 } };
+                        appData.capyGame = { money: 100, clickPower: 1, capyCount: 0, goldCount: 0, spaCount: 0, galaxyCount: 0, clickerLevel: 0, prices: { capy: 100, gold: 650, spa: 3200, galaxy: 15000, clicker: 250 } };
                     }
                     if (!appData.capyGame.prices) {
-                        appData.capyGame.prices = { capy: 100, gold: 650, spa: 3200, clicker: 250 };
+                        appData.capyGame.prices = { capy: 100, gold: 650, spa: 3200, galaxy: 15000, clicker: 250 };
+                    }
+                    if (appData.capyGame.galaxyCount === undefined) {
+                        appData.capyGame.galaxyCount = 0;
+                        appData.capyGame.prices.galaxy = 15000;
                     }
                     if (!appData.fatGame) {
                         appData.fatGame = { kg: 0, clickPower: 1, burgerCount: 0, steakCount: 0, feastCount: 0, biteLevel: 0, prices: { burger: 50, steak: 300, feast: 1500, bite: 100 }, isLiked: false, isDisliked: false, isFavorite: false };
@@ -1863,6 +2169,7 @@
                 }
             }
             applyDataToUI();
+            updatePetUI();
             updateCapyUI();
             updateFatUI();
             updateGuessUI();
@@ -1892,6 +2199,29 @@
                 document.getElementById('preview-avatar').innerHTML = '';
                 document.getElementById('sidebar-avatar').style.backgroundImage = `url('${appData.avatar}')`;
                 document.getElementById('sidebar-avatar').innerHTML = '';
+            }
+
+            // Pet Tap Game Card States
+            const petLikeBtn = document.getElementById('pet-card-like-btn');
+            const petDislikeBtn = document.getElementById('pet-card-dislike-btn');
+            const petFavBtn = document.getElementById('pet-card-fav-btn');
+
+            if (appData.petGame.isLiked) {
+                petLikeBtn.classList.add('liked');
+            } else {
+                petLikeBtn.classList.remove('liked');
+            }
+
+            if (appData.petGame.isDisliked) {
+                petDislikeBtn.classList.add('disliked');
+            } else {
+                petDislikeBtn.classList.remove('disliked');
+            }
+
+            if (appData.petGame.isFavorite) {
+                petFavBtn.classList.add('active');
+            } else {
+                petFavBtn.classList.remove('active');
             }
 
             // Guess The Number Game Card States
@@ -2035,6 +2365,39 @@
         }
 
         /* LIKE, DISLIKE & FAVORITE SYSTEMS */
+        function togglePetLikeGame() {
+            if (appData.petGame.isLiked) {
+                appData.petGame.isLiked = false;
+            } else {
+                appData.petGame.isLiked = true;
+                appData.petGame.isDisliked = false;
+            }
+            applyDataToUI();
+            saveToLocalStorage();
+        }
+
+        function togglePetDislikeGame() {
+            if (appData.petGame.isDisliked) {
+                appData.petGame.isDisliked = false;
+            } else {
+                appData.petGame.isDisliked = true;
+                appData.petGame.isLiked = false;
+            }
+            applyDataToUI();
+            saveToLocalStorage();
+        }
+
+        function togglePetFavoriteGame() {
+            appData.petGame.isFavorite = !appData.petGame.isFavorite;
+            if (appData.petGame.isFavorite) {
+                showToast('Added to Favorites!');
+            } else {
+                showToast('Removed from Favorites.');
+            }
+            applyDataToUI();
+            saveToLocalStorage();
+        }
+
         function toggleGuessLikeGame() {
             if (appData.guessGame.isLiked) {
                 appData.guessGame.isLiked = false;
@@ -2142,6 +2505,33 @@
             let favHTML = '';
             let hasFavs = false;
 
+            if (appData.petGame.isFavorite) {
+                hasFavs = true;
+                favHTML += `
+                    <div class="game-card" onclick="launchGame('pet')">
+                        <div class="game-info">
+                            <div class="game-text-group">
+                                <div class="game-name">😸 Pet Tap</div>
+                                <div class="game-creator">By: Ovbex</div>
+                            </div>
+                            <div class="game-meta-row" onclick="event.stopPropagation()">
+                                <div class="game-stats">
+                                    <div class="stat-item ${appData.petGame.isLiked ? 'liked' : ''}" onclick="togglePetLikeGame()" title="Like">
+                                        <svg viewBox="0 0 24 24"><path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"></path></svg>
+                                    </div>
+                                    <div class="stat-item ${appData.petGame.isDisliked ? 'disliked' : ''}" onclick="togglePetDislikeGame()" title="Dislike">
+                                        <svg viewBox="0 0 24 24"><path d="M10 15v4a3 3 0 0 0 3 3l4-9V2H5.72a2 2 0 0 0-2 1.7l-1.38 9a2 2 0 0 0 2 2.3zm7-13h3a2 2 0 0 1 2 2v7a2 2 0 0 1-2 2h-3"></path></svg>
+                                    </div>
+                                </div>
+                                <button class="favorite-btn active" onclick="togglePetFavoriteGame()" title="Favorite Game">
+                                    <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }
+
             if (appData.guessGame.isFavorite) {
                 hasFavs = true;
                 favHTML += `
@@ -2176,7 +2566,7 @@
                         <div class="game-info">
                             <div class="game-text-group">
                                 <div class="game-name">Buy A Capybara</div>
-                                <div class="game-creator">By: Artvowaned <span class="verified-creator-badge" title="Verified Creator"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg></span></div>
+                                <div class="game-creator">By: 🗿 Sigma Games</div>
                             </div>
                             <div class="game-meta-row" onclick="event.stopPropagation()">
                                 <div class="game-stats">
@@ -2203,7 +2593,7 @@
                         <div class="game-info">
                             <div class="game-text-group">
                                 <div class="game-name">🍖 Eat to be an Fat</div>
-                                <div class="game-creator">By: Artvowaned <span class="verified-creator-badge" title="Verified Creator"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg></span></div>
+                                <div class="game-creator">By: 🗿 Sigma Games</div>
                             </div>
                             <div class="game-meta-row" onclick="event.stopPropagation()">
                                 <div class="game-stats">
@@ -2241,29 +2631,46 @@
             document.getElementById('main-sidebar').style.display = 'none';
             document.getElementById('game-playscreen').classList.add('active');
 
-            if (gameKey === 'guess') {
+            if (gameKey === 'pet') {
+                document.getElementById('active-game-title').textContent = '😸 Pet Tap';
+                document.getElementById('pet-topbar-stats').style.display = 'flex';
+                document.getElementById('guess-topbar-stats').style.display = 'none';
+                document.getElementById('capy-topbar-stats').style.display = 'none';
+                document.getElementById('fat-topbar-stats').style.display = 'none';
+                document.getElementById('pet-game-view').style.display = 'grid';
+                document.getElementById('guess-game-view').style.display = 'none';
+                document.getElementById('capy-game-view').style.display = 'none';
+                document.getElementById('fat-game-view').style.display = 'none';
+                updatePetUI();
+            } else if (gameKey === 'guess') {
                 document.getElementById('active-game-title').textContent = '🔢Guess the number';
+                document.getElementById('pet-topbar-stats').style.display = 'none';
                 document.getElementById('guess-topbar-stats').style.display = 'flex';
                 document.getElementById('capy-topbar-stats').style.display = 'none';
                 document.getElementById('fat-topbar-stats').style.display = 'none';
+                document.getElementById('pet-game-view').style.display = 'none';
                 document.getElementById('guess-game-view').style.display = 'flex';
                 document.getElementById('capy-game-view').style.display = 'none';
                 document.getElementById('fat-game-view').style.display = 'none';
                 updateGuessUI();
             } else if (gameKey === 'capybara') {
                 document.getElementById('active-game-title').textContent = 'Buy A Capybara';
+                document.getElementById('pet-topbar-stats').style.display = 'none';
                 document.getElementById('guess-topbar-stats').style.display = 'none';
                 document.getElementById('capy-topbar-stats').style.display = 'flex';
                 document.getElementById('fat-topbar-stats').style.display = 'none';
+                document.getElementById('pet-game-view').style.display = 'none';
                 document.getElementById('guess-game-view').style.display = 'none';
                 document.getElementById('capy-game-view').style.display = 'grid';
                 document.getElementById('fat-game-view').style.display = 'none';
                 startGameLoop('capy');
             } else if (gameKey === 'fat') {
                 document.getElementById('active-game-title').textContent = '🍖 Eat to be an Fat';
+                document.getElementById('pet-topbar-stats').style.display = 'none';
                 document.getElementById('guess-topbar-stats').style.display = 'none';
                 document.getElementById('capy-topbar-stats').style.display = 'none';
                 document.getElementById('fat-topbar-stats').style.display = 'flex';
+                document.getElementById('pet-game-view').style.display = 'none';
                 document.getElementById('guess-game-view').style.display = 'none';
                 document.getElementById('capy-game-view').style.display = 'none';
                 document.getElementById('fat-game-view').style.display = 'grid';
@@ -2293,6 +2700,113 @@
             }
         });
 
+        /* PET TAP GAME LOGIC */
+        function clickPet() {
+            initAudio();
+            playSound('click');
+            const currentPet = PET_LIST[appData.petGame.currentPetIndex];
+            const multiplier = Math.pow(2, appData.petGame.rebirths);
+            appData.petGame.taps += currentPet.tapPower * multiplier;
+            updatePetUI();
+        }
+
+        function buyPet(index) {
+            initAudio();
+            const pg = appData.petGame;
+            const pet = PET_LIST[index];
+            if (pg.taps >= pet.cost && !pg.ownedPets.includes(index)) {
+                playSound('buy');
+                pg.taps -= pet.cost;
+                pg.ownedPets.push(index);
+                pg.currentPetIndex = index;
+                updatePetUI();
+                saveToLocalStorage();
+            } else if (pg.ownedPets.includes(index)) {
+                playSound('click');
+                pg.currentPetIndex = index;
+                updatePetUI();
+                saveToLocalStorage();
+            }
+        }
+
+        function doRebirth() {
+            initAudio();
+            const pg = appData.petGame;
+            if (pg.taps >= pg.rebirthCost) {
+                playSound('buy');
+                pg.rebirths += 1;
+                pg.taps = 0;
+                pg.currentPetIndex = 0;
+                pg.ownedPets = [0];
+                pg.rebirthCost *= 2;
+                updatePetUI();
+                saveToLocalStorage();
+                showToast('Rebirth successful! Taps and pets reset.');
+            }
+        }
+
+        function updatePetUI() {
+            const pg = appData.petGame;
+            if (!pg.ownedPets) {
+                pg.ownedPets = [0];
+            }
+            if (pg.rebirthCost === undefined) {
+                pg.rebirthCost = 1000;
+            }
+            const currentPet = PET_LIST[pg.currentPetIndex];
+
+            document.getElementById('pet-taps-display').textContent = pg.taps.toLocaleString() + ' Taps';
+            document.getElementById('stat-pet-taps').textContent = pg.taps.toLocaleString();
+            document.getElementById('stat-pet-rebirths').textContent = pg.rebirths;
+            document.getElementById('current-pet-name').textContent = currentPet.name;
+            document.getElementById('pet-big-avatar').textContent = currentPet.emoji;
+
+            const rebirthBtn = document.getElementById('btn-rebirth');
+            rebirthBtn.textContent = `Rebirth (Requires ${pg.rebirthCost.toLocaleString()} Taps)`;
+            if (pg.taps >= pg.rebirthCost) {
+                rebirthBtn.disabled = false;
+            } else {
+                rebirthBtn.disabled = true;
+            }
+
+            let shopHtml = '';
+            PET_LIST.forEach((pet, idx) => {
+                const isOwned = pg.ownedPets.includes(idx);
+                const isEquipped = pg.currentPetIndex === idx;
+                
+                let btnText = 'Buy';
+                let btnDisabled = false;
+                if (isEquipped) {
+                    btnText = 'Equipped';
+                    btnDisabled = true;
+                } else if (isOwned) {
+                    btnText = 'Equip';
+                } else {
+                    btnText = pet.cost.toLocaleString() + ' Taps';
+                    if (pg.taps < pet.cost) btnDisabled = true;
+                }
+
+                shopHtml += `
+                    <div class="shop-item">
+                        <div class="shop-item-row">
+                            <div class="shop-item-info">
+                                <div class="shop-item-icon">${pet.emoji}</div>
+                                <div>
+                                    <div class="shop-item-name">${pet.name}</div>
+                                    <div class="shop-item-desc">+${pet.tapPower} Taps / click</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="shop-item-row">
+                            <span class="shop-item-price" style="color: white;">${pet.cost === 0 ? 'Free' : pet.cost.toLocaleString() + ' Taps'}</span>
+                            <button class="buy-btn" ${btnDisabled && !isOwned ? 'disabled' : ''} onclick="buyPet(${idx})">${btnText}</button>
+                        </div>
+                    </div>
+                `;
+            });
+            document.getElementById('pet-shop-list').innerHTML = shopHtml;
+        }
+
         /* GUESS THE NUMBER GAME LOGIC */
         function submitGuess() {
             initAudio();
@@ -2305,37 +2819,25 @@
                 return;
             }
 
-            const target = appData.guessGame.targetNumber;
-
-            if (val < target) {
-                playSound('click');
-                feedbackEl.textContent = `The number is greater than your choice (${val}). Try a higher one!`;
-                feedbackEl.style.color = varColor('--gold');
-            } else if (val > target) {
-                playSound('click');
-                feedbackEl.textContent = `The number is smaller than your choice (${val}). Try a smaller one!`;
-                feedbackEl.style.color = varColor('--gold');
-            } else {
+            const gg = appData.guessGame;
+            if (val === gg.targetNumber) {
                 playSound('correct');
-                appData.guessGame.points += 10;
-                feedbackEl.textContent = `🎉 Awesome! You guessed the number ${target}! +10 Points earned! New number picked.`;
-                feedbackEl.style.color = varColor('--status-online');
-                appData.guessGame.targetNumber = Math.floor(Math.random() * 100) + 1;
+                gg.points += 10;
+                feedbackEl.textContent = `Correct! The number was ${gg.targetNumber}. +10 Points! New number picked.`;
+                gg.targetNumber = Math.floor(Math.random() * 100) + 1;
+                inputEl.value = '';
                 updateGuessUI();
                 saveToLocalStorage();
+            } else if (val < gg.targetNumber) {
+                playSound('click');
+                feedbackEl.textContent = `Too low! Try a higher number.`;
+            } else {
+                playSound('click');
+                feedbackEl.textContent = `Too high! Try a lower number.`;
             }
-            inputEl.value = '';
-            inputEl.focus();
-        }
-
-        function varColor(name) {
-            return getComputedStyle(document.documentElement).getPropertyValue(name).trim();
         }
 
         function updateGuessUI() {
-            if (!appData.guessGame) {
-                appData.guessGame = { points: 0, targetNumber: Math.floor(Math.random() * 100) + 1, isLiked: false, isDisliked: false, isFavorite: false };
-            }
             document.getElementById('guess-points-display').textContent = 'Points: ' + appData.guessGame.points;
         }
 
@@ -2347,43 +2849,64 @@
             updateCapyUI();
         }
 
-        function calculateCPS() {
-            const cg = appData.capyGame;
-            return (cg.capyCount * 5) + 
-                   (cg.goldCount * 35) + 
-                   (cg.spaCount * 180);
-        }
-
         function buyItem(itemKey) {
             initAudio();
             const cg = appData.capyGame;
-            if (!cg.prices) {
-                cg.prices = { capy: 100, gold: 650, spa: 3200, clicker: 250 };
-            }
-            let price = cg.prices[itemKey];
+            let cost = 0;
 
-            if (cg.money >= price) {
+            if (itemKey === 'capy') cost = cg.prices.capy;
+            else if (itemKey === 'gold') cost = cg.prices.gold;
+            else if (itemKey === 'spa') cost = cg.prices.spa;
+            else if (itemKey === 'galaxy') cost = cg.prices.galaxy;
+            else if (itemKey === 'clicker') cost = cg.prices.clicker;
+
+            if (cg.money >= cost) {
                 playSound('buy');
-                cg.money -= price;
+                cg.money -= cost;
 
                 if (itemKey === 'capy') {
-                    cg.capyCount += 1;
-                    cg.prices.capy = Math.floor(price * 1.18);
+                    cg.capyCount++;
+                    cg.prices.capy = Math.round(cg.prices.capy * 1.15);
                 } else if (itemKey === 'gold') {
-                    cg.goldCount += 1;
-                    cg.prices.gold = Math.floor(price * 1.22);
+                    cg.goldCount++;
+                    cg.prices.gold = Math.round(cg.prices.gold * 1.17);
                 } else if (itemKey === 'spa') {
-                    cg.spaCount += 1;
-                    cg.prices.spa = Math.floor(price * 1.25);
+                    cg.spaCount++;
+                    cg.prices.spa = Math.round(cg.prices.spa * 1.20);
+                } else if (itemKey === 'galaxy') {
+                    cg.galaxyCount++;
+                    cg.prices.galaxy = Math.round(cg.prices.galaxy * 1.22);
                 } else if (itemKey === 'clicker') {
-                    cg.clickerLevel += 1;
+                    cg.clickerLevel++;
                     cg.clickPower += 2;
-                    cg.prices.clicker = Math.floor(price * 1.5);
+                    cg.prices.clicker = Math.round(cg.prices.clicker * 1.30);
                 }
 
                 updateCapyUI();
                 saveToLocalStorage();
             }
+        }
+
+        function updateCapyUI() {
+            const cg = appData.capyGame;
+            document.getElementById('capy-money-display').textContent = '$' + cg.money.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2});
+            document.getElementById('stat-capy-count').textContent = (cg.capyCount + cg.goldCount + cg.spaCount + cg.galaxyCount);
+            document.getElementById('click-power-val').textContent = '+$' + cg.clickPower + '.00';
+
+            const cps = (cg.capyCount * 5) + (cg.goldCount * 35) + (cg.spaCount * 180) + (cg.galaxyCount * 950);
+            document.getElementById('stat-capy-cps').textContent = '$' + cps.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2}) + '/s';
+
+            document.getElementById('price-capy').textContent = '$' + cg.prices.capy.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2});
+            document.getElementById('price-gold').textContent = '$' + cg.prices.gold.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2});
+            document.getElementById('price-spa').textContent = '$' + cg.prices.spa.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2});
+            document.getElementById('price-galaxy').textContent = '$' + cg.prices.galaxy.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2});
+            document.getElementById('price-clicker').textContent = '$' + cg.prices.clicker.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2});
+
+            document.getElementById('btn-buy-capy').disabled = cg.money < cg.prices.capy;
+            document.getElementById('btn-buy-gold').disabled = cg.money < cg.prices.gold;
+            document.getElementById('btn-buy-spa').disabled = cg.money < cg.prices.spa;
+            document.getElementById('btn-buy-galaxy').disabled = cg.money < cg.prices.galaxy;
+            document.getElementById('btn-buy-clicker').disabled = cg.money < cg.prices.clicker;
         }
 
         /* EAT TO BE AN FAT GAME LOGIC */
@@ -2394,38 +2917,28 @@
             updateFatUI();
         }
 
-        function calculateFatKPS() {
-            const fg = appData.fatGame;
-            return (fg.burgerCount * 2) + 
-                   (fg.steakCount * 10) + 
-                   (fg.feastCount * 50);
-        }
-
-        function buyMeat(meatKey) {
+        function buyMeat(key) {
             initAudio();
             const fg = appData.fatGame;
-            if (!fg.prices) {
-                fg.prices = { burger: 50, steak: 300, feast: 1500, bite: 100 };
-            }
-            let price = fg.prices[meatKey];
+            let cost = fg.prices[key];
 
-            if (fg.kg >= price) {
+            if (fg.kg >= cost) {
                 playSound('buy');
-                fg.kg -= price;
+                fg.kg -= cost;
 
-                if (meatKey === 'burger') {
-                    fg.burgerCount += 1;
-                    fg.prices.burger = Math.floor(price * 1.18);
-                } else if (meatKey === 'steak') {
-                    fg.steakCount += 1;
-                    fg.prices.steak = Math.floor(price * 1.22);
-                } else if (meatKey === 'feast') {
-                    fg.feastCount += 1;
-                    fg.prices.feast = Math.floor(price * 1.25);
-                } else if (meatKey === 'bite') {
-                    fg.biteLevel += 1;
+                if (key === 'burger') {
+                    fg.burgerCount++;
+                    fg.prices.burger = Math.round(fg.prices.burger * 1.15);
+                } else if (key === 'steak') {
+                    fg.steakCount++;
+                    fg.prices.steak = Math.round(fg.prices.steak * 1.17);
+                } else if (key === 'feast') {
+                    fg.feastCount++;
+                    fg.prices.feast = Math.round(fg.prices.feast * 1.20);
+                } else if (key === 'bite') {
+                    fg.biteLevel++;
                     fg.clickPower += 2;
-                    fg.prices.bite = Math.floor(price * 1.5);
+                    fg.prices.bite = Math.round(fg.prices.bite * 1.30);
                 }
 
                 updateFatUI();
@@ -2433,64 +2946,14 @@
             }
         }
 
-        function startGameLoop(mode) {
-            if (gameInterval) clearInterval(gameInterval);
-
-            if (mode === 'capy') {
-                updateCapyUI();
-                gameInterval = setInterval(() => {
-                    const cps = calculateCPS();
-                    if (cps > 0) {
-                        appData.capyGame.money += cps / 10;
-                        updateCapyUI();
-                    }
-                }, 100);
-            } else if (mode === 'fat') {
-                updateFatUI();
-                gameInterval = setInterval(() => {
-                    const kps = calculateFatKPS();
-                    if (kps > 0) {
-                        appData.fatGame.kg += kps / 10;
-                        updateFatUI();
-                    }
-                }, 100);
-            }
-        }
-
-        function updateCapyUI() {
-            const cg = appData.capyGame;
-            if (!cg.prices) {
-                cg.prices = { capy: 100, gold: 650, spa: 3200, clicker: 250 };
-            }
-            const cps = calculateCPS();
-
-            document.getElementById('capy-money-display').textContent = '$' + cg.money.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-            document.getElementById('stat-capy-count').textContent = (cg.capyCount + cg.goldCount + cg.spaCount);
-            document.getElementById('stat-capy-cps').textContent = '$' + cps.toLocaleString('en-US', { minimumFractionDigits: 1, maximumFractionDigits: 1 }) + '/s';
-            document.getElementById('click-power-val').textContent = '+$' + cg.clickPower;
-
-            document.getElementById('price-capy').textContent = '$' + cg.prices.capy.toLocaleString();
-            document.getElementById('price-gold').textContent = '$' + cg.prices.gold.toLocaleString();
-            document.getElementById('price-spa').textContent = '$' + cg.prices.spa.toLocaleString();
-            document.getElementById('price-clicker').textContent = '$' + cg.prices.clicker.toLocaleString();
-
-            document.getElementById('btn-buy-capy').disabled = cg.money < cg.prices.capy;
-            document.getElementById('btn-buy-gold').disabled = cg.money < cg.prices.gold;
-            document.getElementById('btn-buy-spa').disabled = cg.money < cg.prices.spa;
-            document.getElementById('btn-buy-clicker').disabled = cg.money < cg.prices.clicker;
-        }
-
         function updateFatUI() {
             const fg = appData.fatGame;
-            if (!fg.prices) {
-                fg.prices = { burger: 50, steak: 300, feast: 1500, bite: 100 };
-            }
-            const kps = calculateFatKPS();
-
-            document.getElementById('fat-kg-display').textContent = fg.kg.toLocaleString('en-US', { minimumFractionDigits: 1, maximumFractionDigits: 1 }) + ' kg';
-            document.getElementById('stat-fat-kg').textContent = fg.kg.toLocaleString('en-US', { minimumFractionDigits: 1, maximumFractionDigits: 1 }) + ' kg';
-            document.getElementById('stat-fat-kps').textContent = kps.toLocaleString('en-US', { minimumFractionDigits: 1, maximumFractionDigits: 1 }) + ' kg/s';
+            document.getElementById('fat-kg-display').textContent = fg.kg.toLocaleString(undefined, {minimumFractionDigits: 1, maximumFractionDigits: 1}) + ' kg';
+            document.getElementById('stat-fat-kg').textContent = fg.kg.toLocaleString(undefined, {minimumFractionDigits: 1, maximumFractionDigits: 1}) + ' kg';
             document.getElementById('fat-power-val').textContent = '+' + fg.clickPower + ' kg';
+
+            const kps = (fg.burgerCount * 2) + (fg.steakCount * 10) + (fg.feastCount * 50);
+            document.getElementById('stat-fat-kps').textContent = kps.toLocaleString(undefined, {minimumFractionDigits: 1, maximumFractionDigits: 1}) + ' kg/s';
 
             document.getElementById('fat-price-burger').textContent = fg.prices.burger.toLocaleString() + ' kg';
             document.getElementById('fat-price-steak').textContent = fg.prices.steak.toLocaleString() + ' kg';
@@ -2503,51 +2966,55 @@
             document.getElementById('btn-buy-bite').disabled = fg.kg < fg.prices.bite;
         }
 
-        /* EXPORT/IMPORT CODE */
+        function startGameLoop(gameKey) {
+            if (gameInterval) clearInterval(gameInterval);
+            
+            gameInterval = setInterval(() => {
+                if (gameKey === 'capy') {
+                    const cg = appData.capyGame;
+                    const cps = (cg.capyCount * 5) + (cg.goldCount * 35) + (cg.spaCount * 180) + (cg.galaxyCount * 950);
+                    if (cps > 0) {
+                        cg.money += cps / 10;
+                        updateCapyUI();
+                    }
+                } else if (gameKey === 'fat') {
+                    const fg = appData.fatGame;
+                    const kps = (fg.burgerCount * 2) + (fg.steakCount * 10) + (fg.feastCount * 50);
+                    if (kps > 0) {
+                        fg.kg += kps / 10;
+                        updateFatUI();
+                    }
+                }
+            }, 100);
+        }
+
+        /* BACKUP & EXPORT FUNCTIONS */
         function generateSaveCode() {
-            try {
-                const jsonString = JSON.stringify(appData);
-                const encodedCode = btoa(encodeURIComponent(jsonString));
-                document.getElementById('save-code-box').value = encodedCode;
-                showToast('Export code generated successfully!');
-            } catch(e) {
-                showToast('Failed to generate code.');
-            }
+            const jsonStr = JSON.stringify(appData);
+            const encoded = btoa(encodeURIComponent(jsonStr));
+            document.getElementById('save-code-box').value = encoded;
+            showToast('Save code generated successfully!');
         }
 
         function importSaveCode() {
-            const codeInput = document.getElementById('save-code-box').value.trim();
-            if (!codeInput) {
-                showToast('Please paste a save code first!');
+            const code = document.getElementById('save-code-box').value.trim();
+            if (!code) {
+                showToast('Please paste a valid save code first!');
                 return;
             }
-
             try {
-                const jsonString = decodeURIComponent(atob(codeInput));
-                const parsedData = JSON.parse(jsonString);
-                
-                if (parsedData && parsedData.username) {
-                    appData = { ...appData, ...parsedData };
-                    if (!appData.guessGame) {
-                        appData.guessGame = { points: 0, targetNumber: Math.floor(Math.random() * 100) + 1, isLiked: false, isDisliked: false, isFavorite: false };
-                    }
-                    if (!appData.capyGame) {
-                        appData.capyGame = { money: 100, clickPower: 1, capyCount: 0, goldCount: 0, spaCount: 0, clickerLevel: 0, prices: { capy: 100, gold: 650, spa: 3200, clicker: 250 } };
-                    }
-                    if (!appData.capyGame.prices) {
-                        appData.capyGame.prices = { capy: 100, gold: 650, spa: 3200, clicker: 250 };
-                    }
-                    if (!appData.fatGame) {
-                        appData.fatGame = { kg: 0, clickPower: 1, burgerCount: 0, steakCount: 0, feastCount: 0, biteLevel: 0, prices: { burger: 50, steak: 300, feast: 1500, bite: 100 }, isLiked: false, isDisliked: false, isFavorite: false };
-                    }
-                    applyDataToUI();
-                    saveToLocalStorage();
-                    showToast('Save data imported successfully!');
-                } else {
-                    showToast('Invalid save data format.');
-                }
+                const decoded = decodeURIComponent(atob(code));
+                const parsed = JSON.parse(decoded);
+                appData = parsed;
+                applyDataToUI();
+                updatePetUI();
+                updateCapyUI();
+                updateFatUI();
+                updateGuessUI();
+                saveToLocalStorage();
+                showToast('Save data imported successfully!');
             } catch(e) {
-                showToast('Failed to decode save code.');
+                showToast('Invalid save code format!');
             }
         }
 
