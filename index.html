@@ -21,6 +21,7 @@
             --status-online: #10b981;
             --money: #22c55e;
             --gold: #f59e0b;
+            --blue-points: #3b82f6;
         }
 
         * {
@@ -243,12 +244,27 @@
             display: flex;
             flex-direction: column;
             cursor: pointer;
+            position: relative;
         }
 
         .game-card:hover {
             border-color: var(--border-focus);
             transform: translateY(-3px);
             box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+
+        .new-game-badge {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            background-color: var(--accent);
+            color: white;
+            font-size: 10px;
+            font-weight: 800;
+            padding: 3px 8px;
+            border-radius: 6px;
+            letter-spacing: 0.5px;
+            box-shadow: 0 0 10px var(--accent-glow);
         }
 
         .game-info {
@@ -276,6 +292,28 @@
             font-size: 12px;
             color: var(--text-muted);
             line-height: 1.2;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .verified-creator-badge {
+            width: 12px;
+            height: 12px;
+            background-color: var(--accent);
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .verified-creator-badge svg {
+            width: 7px;
+            height: 7px;
+            stroke: white;
+            stroke-width: 3;
+            fill: none;
         }
 
         .game-meta-row {
@@ -721,6 +759,115 @@
             cursor: not-allowed;
         }
 
+        /* EAT TO BE AN FAT GAME INTERIOR */
+        .fat-game-container {
+            flex: 1;
+            display: grid;
+            grid-template-columns: 1fr 340px;
+            background-color: var(--bg-deep);
+            overflow: hidden;
+        }
+
+        .fat-main-view {
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 24px;
+            overflow-y: auto;
+            border-right: 1px solid var(--border);
+        }
+
+        /* GUESS THE NUMBER GAME INTERIOR */
+        .guess-game-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background-color: var(--bg-deep);
+            padding: 40px;
+            overflow-y: auto;
+        }
+
+        .guess-card {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 40px;
+            width: 100%;
+            max-width: 500px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 24px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+            text-align: center;
+        }
+
+        .guess-title {
+            font-size: 24px;
+            font-weight: 800;
+            color: white;
+        }
+
+        .guess-desc {
+            font-size: 14px;
+            color: var(--text-muted);
+            line-height: 1.5;
+        }
+
+        .guess-feedback {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--gold);
+            min-height: 24px;
+        }
+
+        .guess-input-group {
+            display: flex;
+            gap: 10px;
+            width: 100%;
+        }
+
+        .guess-input {
+            flex: 1;
+            background-color: var(--bg-deep);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 14px 16px;
+            color: white;
+            font-size: 16px;
+            font-weight: 700;
+            text-align: center;
+            outline: none;
+            transition: all 0.2s;
+        }
+
+        .guess-input:focus {
+            border-color: var(--blue-points);
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.25);
+        }
+
+        .guess-submit-btn {
+            background-color: var(--blue-points);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            padding: 0 24px;
+            font-size: 14px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s;
+            box-shadow: 0 4px 14px rgba(59, 130, 246, 0.3);
+        }
+
+        .guess-submit-btn:hover {
+            background-color: #2563eb;
+            transform: translateY(-1px);
+        }
+
         /* PROFILE TAB STYLES */
         .profile-container {
             display: grid;
@@ -1116,7 +1263,7 @@
             
             <div class="nav-links">
                 <div class="nav-item active" onclick="switchTab('games', this)">
-                    <svg viewBox="0 0 24 24"><rect x="2" y="6" width="20" height="12" rx="2"></rect><path d="M6 12h4m-2-2v4m10-1v2m-2-2h2"></path></svg>
+                    <svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
                     Games
                 </div>
                 <div class="nav-item" onclick="switchTab('profile', this)">
@@ -1124,7 +1271,7 @@
                     Profile
                 </div>
                 <div class="nav-item" onclick="switchTab('settings', this)">
-                    <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+                    <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06-.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
                     Settings
                 </div>
             </div>
@@ -1163,12 +1310,35 @@
 
             <div class="sub-heading">All Games</div>
             <div class="games-grid" id="all-games-grid">
+                <!-- Guess The Number Game Card -->
+                <div class="game-card" onclick="launchGame('guess')">
+                    <div class="game-info">
+                        <div class="game-text-group">
+                            <div class="game-name">🔢Guess the number</div>
+                            <div class="game-creator">By: Antxowany</div>
+                        </div>
+                        <div class="game-meta-row" onclick="event.stopPropagation()">
+                            <div class="game-stats">
+                                <div class="stat-item" id="guess-card-like-btn" onclick="toggleGuessLikeGame()" title="Like">
+                                    <svg viewBox="0 0 24 24"><path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"></path></svg>
+                                </div>
+                                <div class="stat-item" id="guess-card-dislike-btn" onclick="toggleGuessDislikeGame()" title="Dislike">
+                                    <svg viewBox="0 0 24 24"><path d="M10 15v4a3 3 0 0 0 3 3l4-9V2H5.72a2 2 0 0 0-2 1.7l-1.38 9a2 2 0 0 0 2 2.3zm7-13h3a2 2 0 0 1 2 2v7a2 2 0 0 1-2 2h-3"></path></svg>
+                                </div>
+                            </div>
+                            <button class="favorite-btn" id="guess-card-fav-btn" onclick="toggleGuessFavoriteGame()" title="Favorite Game">
+                                <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
                 <!-- Buy A Capybara Game Card -->
                 <div class="game-card" onclick="launchGame('capybara')">
                     <div class="game-info">
                         <div class="game-text-group">
                             <div class="game-name">Buy A Capybara</div>
-                            <div class="game-creator">By: Artvowaned</div>
+                            <div class="game-creator">By: Artvowaned <span class="verified-creator-badge" title="Verified Creator"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg></span></div>
                         </div>
                         <div class="game-meta-row" onclick="event.stopPropagation()">
                             <div class="game-stats">
@@ -1180,6 +1350,29 @@
                                 </div>
                             </div>
                             <button class="favorite-btn" id="card-fav-btn" onclick="toggleFavoriteGame()" title="Favorite Game">
+                                <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Eat to be an Fat Game Card -->
+                <div class="game-card" onclick="launchGame('fat')">
+                    <div class="game-info">
+                        <div class="game-text-group">
+                            <div class="game-name">🍖 Eat to be an Fat</div>
+                            <div class="game-creator">By: Artvowaned <span class="verified-creator-badge" title="Verified Creator"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg></span></div>
+                        </div>
+                        <div class="game-meta-row" onclick="event.stopPropagation()">
+                            <div class="game-stats">
+                                <div class="stat-item" id="fat-card-like-btn" onclick="toggleFatLikeGame()" title="Like">
+                                    <svg viewBox="0 0 24 24"><path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"></path></svg>
+                                </div>
+                                <div class="stat-item" id="fat-card-dislike-btn" onclick="toggleFatDislikeGame()" title="Dislike">
+                                    <svg viewBox="0 0 24 24"><path d="M10 15v4a3 3 0 0 0 3 3l4-9V2H5.72a2 2 0 0 0-2 1.7l-1.38 9a2 2 0 0 0 2 2.3zm7-13h3a2 2 0 0 1 2 2v7a2 2 0 0 1-2 2h-3"></path></svg>
+                                </div>
+                            </div>
+                            <button class="favorite-btn" id="fat-card-fav-btn" onclick="toggleFatFavoriteGame()" title="Favorite Game">
                                 <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
                             </button>
                         </div>
@@ -1302,19 +1495,39 @@
             </div>
         </div>
 
-        <!-- BUY A CAPYBARA GAME PLAYSCREEN -->
+        <!-- GAME PLAYSCREEN -->
         <div id="game-playscreen">
             <div class="game-topbar">
                 <button class="menu-toggle-btn" onclick="toggleGameMenu()" title="Menu (ESC)">
                     <svg viewBox="0 0 24 24"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
                 </button>
-                <div class="ingame-title">Buy A Capybara</div>
-                <div class="ingame-stats-bar">
+                <div class="ingame-title" id="active-game-title">Game</div>
+                <div class="ingame-stats-bar" id="capy-topbar-stats">
                     <div class="ingame-money" id="capy-money-display">$100.00</div>
+                </div>
+                <div class="ingame-stats-bar" id="fat-topbar-stats" style="display: none;">
+                    <div class="ingame-money" id="fat-kg-display" style="color: var(--gold); background-color: rgba(245, 158, 11, 0.1); border-color: rgba(245, 158, 11, 0.3);">0.0 kg</div>
+                </div>
+                <div class="ingame-stats-bar" id="guess-topbar-stats" style="display: none;">
+                    <div class="ingame-money" id="guess-points-display" style="color: var(--blue-points); background-color: rgba(59, 130, 246, 0.1); border-color: rgba(59, 130, 246, 0.3);">Points: 0</div>
                 </div>
             </div>
 
-            <div class="capy-game-container">
+            <!-- GUESS THE NUMBER GAME INTERIOR -->
+            <div class="guess-game-container" id="guess-game-view" style="display: none;">
+                <div class="guess-card">
+                    <div class="guess-title">🔢Guess the number</div>
+                    <div class="guess-desc">I have picked a random number between 1 and 100. Try to guess what it is!</div>
+                    <div class="guess-feedback" id="guess-feedback-text">Make your first guess below!</div>
+                    <div class="guess-input-group">
+                        <input type="number" id="guess-number-input" class="guess-input" placeholder="Enter number..." min="1" max="100" onkeydown="if(event.key==='Enter') submitGuess()">
+                        <button class="guess-submit-btn" onclick="submitGuess()">Guess</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- BUY A CAPYBARA GAME INTERIOR -->
+            <div class="capy-game-container" id="capy-game-view">
                 <!-- Main Clicking View -->
                 <div class="capy-main-view">
                     <div class="capy-big-display" onclick="clickCapybara()" title="Click me!">🦫</div>
@@ -1409,6 +1622,102 @@
                 </div>
             </div>
 
+            <!-- EAT TO BE AN FAT GAME INTERIOR -->
+            <div class="fat-game-container" id="fat-game-view" style="display: none;">
+                <!-- Main Eating View -->
+                <div class="fat-main-view">
+                    <div class="capy-big-display" onclick="clickFood()" title="Click to eat!">🍖</div>
+                    <div class="click-power-hint">Click the food to gain <span id="fat-power-val">+1 kg</span> per click!</div>
+
+                    <div class="capy-stats-grid">
+                        <div class="capy-stat-card">
+                            <span class="capy-stat-label">Total Kilograms</span>
+                            <span class="capy-stat-value" id="stat-fat-kg" style="color: var(--gold);">0.0 kg</span>
+                        </div>
+                        <div class="capy-stat-card">
+                            <span class="capy-stat-label">KG Per Second</span>
+                            <span class="capy-stat-value" id="stat-fat-kps" style="color: var(--gold);">0.0 kg/s</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Fat Shop Sidebar -->
+                <div class="capy-shop-sidebar">
+                    <div class="shop-header">
+                        🥩 Meat Shop
+                    </div>
+                    <div class="shop-items-list">
+                        <!-- Item 1: Burger -->
+                        <div class="shop-item">
+                            <div class="shop-item-row">
+                                <div class="shop-item-info">
+                                    <div class="shop-item-icon">🍔</div>
+                                    <div>
+                                        <div class="shop-item-name">Juicy Burger</div>
+                                        <div class="shop-item-desc">Gives 2.0 kg / sec</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="shop-item-row">
+                                <span class="shop-item-price" id="fat-price-burger" style="color: var(--gold);">50 kg</span>
+                                <button class="buy-btn" id="btn-buy-burger" onclick="buyMeat('burger')">Buy</button>
+                            </div>
+                        </div>
+
+                        <!-- Item 2: Steak -->
+                        <div class="shop-item">
+                            <div class="shop-item-row">
+                                <div class="shop-item-info">
+                                    <div class="shop-item-icon">🥩</div>
+                                    <div>
+                                        <div class="shop-item-name">Big Steak</div>
+                                        <div class="shop-item-desc">Gives 10.0 kg / sec</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="shop-item-row">
+                                <span class="shop-item-price" id="fat-price-steak" style="color: var(--gold);">300 kg</span>
+                                <button class="buy-btn" id="btn-buy-steak" onclick="buyMeat('steak')">Buy</button>
+                            </div>
+                        </div>
+
+                        <!-- Item 3: Whole Feast -->
+                        <div class="shop-item">
+                            <div class="shop-item-row">
+                                <div class="shop-item-info">
+                                    <div class="shop-item-icon">🍗</div>
+                                    <div>
+                                        <div class="shop-item-name">Mega Feast</div>
+                                        <div class="shop-item-desc">Gives 50.0 kg / sec</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="shop-item-row">
+                                <span class="shop-item-price" id="fat-price-feast" style="color: var(--gold);">1,500 kg</span>
+                                <button class="buy-btn" id="btn-buy-feast" onclick="buyMeat('feast')">Buy</button>
+                            </div>
+                        </div>
+
+                        <!-- Item 4: Better Bite Upgrade -->
+                        <div class="shop-item">
+                            <div class="shop-item-row">
+                                <div class="shop-item-info">
+                                    <div class="shop-item-icon">🦷</div>
+                                    <div>
+                                        <div class="shop-item-name">Better Bite</div>
+                                        <div class="shop-item-desc">+ 2 kg per click</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="shop-item-row">
+                                <span class="shop-item-price" id="fat-price-bite" style="color: var(--gold);">100 kg</span>
+                                <button class="buy-btn" id="btn-buy-bite" onclick="buyMeat('bite')">Buy</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <!-- In-game Pause/Menu Overlay -->
             <div class="ingame-modal-overlay" id="ingame-modal">
                 <div class="ingame-modal">
@@ -1437,6 +1746,30 @@
             isLiked: false,
             isDisliked: false,
             isFavorite: false,
+            guessGame: {
+                points: 0,
+                targetNumber: Math.floor(Math.random() * 100) + 1,
+                isLiked: false,
+                isDisliked: false,
+                isFavorite: false
+            },
+            fatGame: {
+                kg: 0,
+                clickPower: 1,
+                burgerCount: 0,
+                steakCount: 0,
+                feastCount: 0,
+                biteLevel: 0,
+                prices: {
+                    burger: 50,
+                    steak: 300,
+                    feast: 1500,
+                    bite: 100
+                },
+                isLiked: false,
+                isDisliked: false,
+                isFavorite: false
+            },
             capyGame: {
                 money: 100,
                 clickPower: 1,
@@ -1453,7 +1786,7 @@
             }
         };
 
-        // Web Audio API & Synth Sound Engine for Capybara Game
+        // Web Audio API & Synth Sound Engine for Games
         let audioCtx = null;
 
         function initAudio() {
@@ -1473,7 +1806,6 @@
             const now = audioCtx.currentTime;
 
             if (type === 'click') {
-                // Pop / click sound
                 const osc = audioCtx.createOscillator();
                 const gain = audioCtx.createGain();
                 osc.type = 'sine';
@@ -1487,14 +1819,13 @@
                 gain.connect(audioCtx.destination);
                 osc.start(now);
                 osc.stop(now + 0.08);
-            } else if (type === 'buy') {
-                // Success chime
+            } else if (type === 'buy' || type === 'correct') {
                 const osc = audioCtx.createOscillator();
                 const gain = audioCtx.createGain();
                 osc.type = 'triangle';
-                osc.frequency.setValueAtTime(523.25, now); // C5
-                osc.frequency.setValueAtTime(659.25, now + 0.08); // E5
-                osc.frequency.setValueAtTime(783.99, now + 0.16); // G5
+                osc.frequency.setValueAtTime(523.25, now);
+                osc.frequency.setValueAtTime(659.25, now + 0.08);
+                osc.frequency.setValueAtTime(783.99, now + 0.16);
 
                 gain.gain.setValueAtTime(0.2 * masterVol, now);
                 gain.gain.exponentialRampToValueAtTime(0.01, now + 0.3);
@@ -1512,11 +1843,20 @@
                 try {
                     const parsed = JSON.parse(saved);
                     appData = { ...appData, ...parsed };
+                    if (!appData.guessGame) {
+                        appData.guessGame = { points: 0, targetNumber: Math.floor(Math.random() * 100) + 1, isLiked: false, isDisliked: false, isFavorite: false };
+                    }
                     if (!appData.capyGame) {
                         appData.capyGame = { money: 100, clickPower: 1, capyCount: 0, goldCount: 0, spaCount: 0, clickerLevel: 0, prices: { capy: 100, gold: 650, spa: 3200, clicker: 250 } };
                     }
                     if (!appData.capyGame.prices) {
                         appData.capyGame.prices = { capy: 100, gold: 650, spa: 3200, clicker: 250 };
+                    }
+                    if (!appData.fatGame) {
+                        appData.fatGame = { kg: 0, clickPower: 1, burgerCount: 0, steakCount: 0, feastCount: 0, biteLevel: 0, prices: { burger: 50, steak: 300, feast: 1500, bite: 100 }, isLiked: false, isDisliked: false, isFavorite: false };
+                    }
+                    if (!appData.fatGame.prices) {
+                        appData.fatGame.prices = { burger: 50, steak: 300, feast: 1500, bite: 100 };
                     }
                 } catch(e) {
                     console.error("Failed to load save data", e);
@@ -1524,6 +1864,8 @@
             }
             applyDataToUI();
             updateCapyUI();
+            updateFatUI();
+            updateGuessUI();
         });
 
         function saveToLocalStorage() {
@@ -1552,7 +1894,30 @@
                 document.getElementById('sidebar-avatar').innerHTML = '';
             }
 
-            // Like, Dislike & Favorite state
+            // Guess The Number Game Card States
+            const guessLikeBtn = document.getElementById('guess-card-like-btn');
+            const guessDislikeBtn = document.getElementById('guess-card-dislike-btn');
+            const guessFavBtn = document.getElementById('guess-card-fav-btn');
+
+            if (appData.guessGame.isLiked) {
+                guessLikeBtn.classList.add('liked');
+            } else {
+                guessLikeBtn.classList.remove('liked');
+            }
+
+            if (appData.guessGame.isDisliked) {
+                guessDislikeBtn.classList.add('disliked');
+            } else {
+                guessDislikeBtn.classList.remove('disliked');
+            }
+
+            if (appData.guessGame.isFavorite) {
+                guessFavBtn.classList.add('active');
+            } else {
+                guessFavBtn.classList.remove('active');
+            }
+
+            // Capybara Game Card States
             const likeBtn = document.getElementById('card-like-btn');
             const dislikeBtn = document.getElementById('card-dislike-btn');
             const favBtn = document.getElementById('card-fav-btn');
@@ -1573,6 +1938,29 @@
                 favBtn.classList.add('active');
             } else {
                 favBtn.classList.remove('active');
+            }
+
+            // Eat to be an Fat Game Card States
+            const fatLikeBtn = document.getElementById('fat-card-like-btn');
+            const fatDislikeBtn = document.getElementById('fat-card-dislike-btn');
+            const fatFavBtn = document.getElementById('fat-card-fav-btn');
+
+            if (appData.fatGame.isLiked) {
+                fatLikeBtn.classList.add('liked');
+            } else {
+                fatLikeBtn.classList.remove('liked');
+            }
+
+            if (appData.fatGame.isDisliked) {
+                fatDislikeBtn.classList.add('disliked');
+            } else {
+                fatDislikeBtn.classList.remove('disliked');
+            }
+
+            if (appData.fatGame.isFavorite) {
+                fatFavBtn.classList.add('active');
+            } else {
+                fatFavBtn.classList.remove('active');
             }
 
             renderFavorites();
@@ -1646,7 +2034,40 @@
             }
         }
 
-        /* LIKE, DISLIKE & FAVORITE SYSTEM */
+        /* LIKE, DISLIKE & FAVORITE SYSTEMS */
+        function toggleGuessLikeGame() {
+            if (appData.guessGame.isLiked) {
+                appData.guessGame.isLiked = false;
+            } else {
+                appData.guessGame.isLiked = true;
+                appData.guessGame.isDisliked = false;
+            }
+            applyDataToUI();
+            saveToLocalStorage();
+        }
+
+        function toggleGuessDislikeGame() {
+            if (appData.guessGame.isDisliked) {
+                appData.guessGame.isDisliked = false;
+            } else {
+                appData.guessGame.isDisliked = true;
+                appData.guessGame.isLiked = false;
+            }
+            applyDataToUI();
+            saveToLocalStorage();
+        }
+
+        function toggleGuessFavoriteGame() {
+            appData.guessGame.isFavorite = !appData.guessGame.isFavorite;
+            if (appData.guessGame.isFavorite) {
+                showToast('Added to Favorites!');
+            } else {
+                showToast('Removed from Favorites.');
+            }
+            applyDataToUI();
+            saveToLocalStorage();
+        }
+
         function toggleLikeGame() {
             if (appData.isLiked) {
                 appData.isLiked = false;
@@ -1680,20 +2101,82 @@
             saveToLocalStorage();
         }
 
+        function toggleFatLikeGame() {
+            if (appData.fatGame.isLiked) {
+                appData.fatGame.isLiked = false;
+            } else {
+                appData.fatGame.isLiked = true;
+                appData.fatGame.isDisliked = false;
+            }
+            applyDataToUI();
+            saveToLocalStorage();
+        }
+
+        function toggleFatDislikeGame() {
+            if (appData.fatGame.isDisliked) {
+                appData.fatGame.isDisliked = false;
+            } else {
+                appData.fatGame.isDisliked = true;
+                appData.fatGame.isLiked = false;
+            }
+            applyDataToUI();
+            saveToLocalStorage();
+        }
+
+        function toggleFatFavoriteGame() {
+            appData.fatGame.isFavorite = !appData.fatGame.isFavorite;
+            if (appData.fatGame.isFavorite) {
+                showToast('Added to Favorites!');
+            } else {
+                showToast('Removed from Favorites.');
+            }
+            applyDataToUI();
+            saveToLocalStorage();
+        }
+
         function renderFavorites() {
             const favSection = document.getElementById('favorite-games-section');
             const favGrid = document.getElementById('favorite-games-grid');
             const emptyText = document.getElementById('empty-fav-text');
 
+            let favHTML = '';
+            let hasFavs = false;
+
+            if (appData.guessGame.isFavorite) {
+                hasFavs = true;
+                favHTML += `
+                    <div class="game-card" onclick="launchGame('guess')">
+                        <div class="game-info">
+                            <div class="game-text-group">
+                                <div class="game-name">🔢Guess the number</div>
+                                <div class="game-creator">By: Antxowany</div>
+                            </div>
+                            <div class="game-meta-row" onclick="event.stopPropagation()">
+                                <div class="game-stats">
+                                    <div class="stat-item ${appData.guessGame.isLiked ? 'liked' : ''}" onclick="toggleGuessLikeGame()" title="Like">
+                                        <svg viewBox="0 0 24 24"><path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"></path></svg>
+                                    </div>
+                                    <div class="stat-item ${appData.guessGame.isDisliked ? 'disliked' : ''}" onclick="toggleGuessDislikeGame()" title="Dislike">
+                                        <svg viewBox="0 0 24 24"><path d="M10 15v4a3 3 0 0 0 3 3l4-9V2H5.72a2 2 0 0 0-2 1.7l-1.38 9a2 2 0 0 0 2 2.3zm7-13h3a2 2 0 0 1 2 2v7a2 2 0 0 1-2 2h-3"></path></svg>
+                                    </div>
+                                </div>
+                                <button class="favorite-btn active" onclick="toggleGuessFavoriteGame()" title="Favorite Game">
+                                    <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }
+
             if (appData.isFavorite) {
-                favSection.style.display = 'block';
-                emptyText.style.display = 'none';
-                favGrid.innerHTML = `
+                hasFavs = true;
+                favHTML += `
                     <div class="game-card" onclick="launchGame('capybara')">
                         <div class="game-info">
                             <div class="game-text-group">
                                 <div class="game-name">Buy A Capybara</div>
-                                <div class="game-creator">By: Artvowaned</div>
+                                <div class="game-creator">By: Artvowaned <span class="verified-creator-badge" title="Verified Creator"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg></span></div>
                             </div>
                             <div class="game-meta-row" onclick="event.stopPropagation()">
                                 <div class="game-stats">
@@ -1711,6 +2194,39 @@
                         </div>
                     </div>
                 `;
+            }
+
+            if (appData.fatGame.isFavorite) {
+                hasFavs = true;
+                favHTML += `
+                    <div class="game-card" onclick="launchGame('fat')">
+                        <div class="game-info">
+                            <div class="game-text-group">
+                                <div class="game-name">🍖 Eat to be an Fat</div>
+                                <div class="game-creator">By: Artvowaned <span class="verified-creator-badge" title="Verified Creator"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg></span></div>
+                            </div>
+                            <div class="game-meta-row" onclick="event.stopPropagation()">
+                                <div class="game-stats">
+                                    <div class="stat-item ${appData.fatGame.isLiked ? 'liked' : ''}" onclick="toggleFatLikeGame()" title="Like">
+                                        <svg viewBox="0 0 24 24"><path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"></path></svg>
+                                    </div>
+                                    <div class="stat-item ${appData.fatGame.isDisliked ? 'disliked' : ''}" onclick="toggleFatDislikeGame()" title="Dislike">
+                                        <svg viewBox="0 0 24 24"><path d="M10 15v4a3 3 0 0 0 3 3l4-9V2H5.72a2 2 0 0 0-2 1.7l-1.38 9a2 2 0 0 0 2 2.3zm7-13h3a2 2 0 0 1 2 2v7a2 2 0 0 1-2 2h-3"></path></svg>
+                                    </div>
+                                </div>
+                                <button class="favorite-btn active" onclick="toggleFatFavoriteGame()" title="Favorite Game">
+                                    <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }
+
+            if (hasFavs) {
+                favSection.style.display = 'block';
+                emptyText.style.display = 'none';
+                favGrid.innerHTML = favHTML;
             } else {
                 favSection.style.display = 'none';
                 favGrid.innerHTML = '';
@@ -1721,16 +2237,42 @@
         let gameInterval = null;
 
         function launchGame(gameKey) {
-            if (gameKey === 'capybara') {
-                initAudio();
-                document.getElementById('main-sidebar').style.display = 'none';
-                document.getElementById('game-playscreen').classList.add('active');
-                startGameLoop();
+            initAudio();
+            document.getElementById('main-sidebar').style.display = 'none';
+            document.getElementById('game-playscreen').classList.add('active');
+
+            if (gameKey === 'guess') {
+                document.getElementById('active-game-title').textContent = '🔢Guess the number';
+                document.getElementById('guess-topbar-stats').style.display = 'flex';
+                document.getElementById('capy-topbar-stats').style.display = 'none';
+                document.getElementById('fat-topbar-stats').style.display = 'none';
+                document.getElementById('guess-game-view').style.display = 'flex';
+                document.getElementById('capy-game-view').style.display = 'none';
+                document.getElementById('fat-game-view').style.display = 'none';
+                updateGuessUI();
+            } else if (gameKey === 'capybara') {
+                document.getElementById('active-game-title').textContent = 'Buy A Capybara';
+                document.getElementById('guess-topbar-stats').style.display = 'none';
+                document.getElementById('capy-topbar-stats').style.display = 'flex';
+                document.getElementById('fat-topbar-stats').style.display = 'none';
+                document.getElementById('guess-game-view').style.display = 'none';
+                document.getElementById('capy-game-view').style.display = 'grid';
+                document.getElementById('fat-game-view').style.display = 'none';
+                startGameLoop('capy');
+            } else if (gameKey === 'fat') {
+                document.getElementById('active-game-title').textContent = '🍖 Eat to be an Fat';
+                document.getElementById('guess-topbar-stats').style.display = 'none';
+                document.getElementById('capy-topbar-stats').style.display = 'none';
+                document.getElementById('fat-topbar-stats').style.display = 'flex';
+                document.getElementById('guess-game-view').style.display = 'none';
+                document.getElementById('capy-game-view').style.display = 'none';
+                document.getElementById('fat-game-view').style.display = 'grid';
+                startGameLoop('fat');
             }
         }
 
         function exitGameToHub() {
-            clearInterval(gameInterval);
+            if (gameInterval) clearInterval(gameInterval);
             document.getElementById('ingame-modal').classList.remove('active');
             document.getElementById('game-playscreen').classList.remove('active');
             document.getElementById('main-sidebar').style.display = 'flex';
@@ -1751,7 +2293,53 @@
             }
         });
 
-        /* BUY A CAPYBARA GAME LOGIC FIXED */
+        /* GUESS THE NUMBER GAME LOGIC */
+        function submitGuess() {
+            initAudio();
+            const inputEl = document.getElementById('guess-number-input');
+            const feedbackEl = document.getElementById('guess-feedback-text');
+            const val = parseInt(inputEl.value);
+
+            if (isNaN(val)) {
+                feedbackEl.textContent = "Please enter a valid number!";
+                return;
+            }
+
+            const target = appData.guessGame.targetNumber;
+
+            if (val < target) {
+                playSound('click');
+                feedbackEl.textContent = `The number is greater than your choice (${val}). Try a higher one!`;
+                feedbackEl.style.color = varColor('--gold');
+            } else if (val > target) {
+                playSound('click');
+                feedbackEl.textContent = `The number is smaller than your choice (${val}). Try a smaller one!`;
+                feedbackEl.style.color = varColor('--gold');
+            } else {
+                playSound('correct');
+                appData.guessGame.points += 10;
+                feedbackEl.textContent = `🎉 Awesome! You guessed the number ${target}! +10 Points earned! New number picked.`;
+                feedbackEl.style.color = varColor('--status-online');
+                appData.guessGame.targetNumber = Math.floor(Math.random() * 100) + 1;
+                updateGuessUI();
+                saveToLocalStorage();
+            }
+            inputEl.value = '';
+            inputEl.focus();
+        }
+
+        function varColor(name) {
+            return getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+        }
+
+        function updateGuessUI() {
+            if (!appData.guessGame) {
+                appData.guessGame = { points: 0, targetNumber: Math.floor(Math.random() * 100) + 1, isLiked: false, isDisliked: false, isFavorite: false };
+            }
+            document.getElementById('guess-points-display').textContent = 'Points: ' + appData.guessGame.points;
+        }
+
+        /* BUY A CAPYBARA GAME LOGIC */
         function clickCapybara() {
             initAudio();
             playSound('click');
@@ -1798,17 +2386,75 @@
             }
         }
 
-        function startGameLoop() {
-            updateCapyUI();
+        /* EAT TO BE AN FAT GAME LOGIC */
+        function clickFood() {
+            initAudio();
+            playSound('click');
+            appData.fatGame.kg += appData.fatGame.clickPower;
+            updateFatUI();
+        }
+
+        function calculateFatKPS() {
+            const fg = appData.fatGame;
+            return (fg.burgerCount * 2) + 
+                   (fg.steakCount * 10) + 
+                   (fg.feastCount * 50);
+        }
+
+        function buyMeat(meatKey) {
+            initAudio();
+            const fg = appData.fatGame;
+            if (!fg.prices) {
+                fg.prices = { burger: 50, steak: 300, feast: 1500, bite: 100 };
+            }
+            let price = fg.prices[meatKey];
+
+            if (fg.kg >= price) {
+                playSound('buy');
+                fg.kg -= price;
+
+                if (meatKey === 'burger') {
+                    fg.burgerCount += 1;
+                    fg.prices.burger = Math.floor(price * 1.18);
+                } else if (meatKey === 'steak') {
+                    fg.steakCount += 1;
+                    fg.prices.steak = Math.floor(price * 1.22);
+                } else if (meatKey === 'feast') {
+                    fg.feastCount += 1;
+                    fg.prices.feast = Math.floor(price * 1.25);
+                } else if (meatKey === 'bite') {
+                    fg.biteLevel += 1;
+                    fg.clickPower += 2;
+                    fg.prices.bite = Math.floor(price * 1.5);
+                }
+
+                updateFatUI();
+                saveToLocalStorage();
+            }
+        }
+
+        function startGameLoop(mode) {
             if (gameInterval) clearInterval(gameInterval);
 
-            gameInterval = setInterval(() => {
-                const cps = calculateCPS();
-                if (cps > 0) {
-                    appData.capyGame.money += cps / 10;
-                    updateCapyUI();
-                }
-            }, 100);
+            if (mode === 'capy') {
+                updateCapyUI();
+                gameInterval = setInterval(() => {
+                    const cps = calculateCPS();
+                    if (cps > 0) {
+                        appData.capyGame.money += cps / 10;
+                        updateCapyUI();
+                    }
+                }, 100);
+            } else if (mode === 'fat') {
+                updateFatUI();
+                gameInterval = setInterval(() => {
+                    const kps = calculateFatKPS();
+                    if (kps > 0) {
+                        appData.fatGame.kg += kps / 10;
+                        updateFatUI();
+                    }
+                }, 100);
+            }
         }
 
         function updateCapyUI() {
@@ -1832,6 +2478,29 @@
             document.getElementById('btn-buy-gold').disabled = cg.money < cg.prices.gold;
             document.getElementById('btn-buy-spa').disabled = cg.money < cg.prices.spa;
             document.getElementById('btn-buy-clicker').disabled = cg.money < cg.prices.clicker;
+        }
+
+        function updateFatUI() {
+            const fg = appData.fatGame;
+            if (!fg.prices) {
+                fg.prices = { burger: 50, steak: 300, feast: 1500, bite: 100 };
+            }
+            const kps = calculateFatKPS();
+
+            document.getElementById('fat-kg-display').textContent = fg.kg.toLocaleString('en-US', { minimumFractionDigits: 1, maximumFractionDigits: 1 }) + ' kg';
+            document.getElementById('stat-fat-kg').textContent = fg.kg.toLocaleString('en-US', { minimumFractionDigits: 1, maximumFractionDigits: 1 }) + ' kg';
+            document.getElementById('stat-fat-kps').textContent = kps.toLocaleString('en-US', { minimumFractionDigits: 1, maximumFractionDigits: 1 }) + ' kg/s';
+            document.getElementById('fat-power-val').textContent = '+' + fg.clickPower + ' kg';
+
+            document.getElementById('fat-price-burger').textContent = fg.prices.burger.toLocaleString() + ' kg';
+            document.getElementById('fat-price-steak').textContent = fg.prices.steak.toLocaleString() + ' kg';
+            document.getElementById('fat-price-feast').textContent = fg.prices.feast.toLocaleString() + ' kg';
+            document.getElementById('fat-price-bite').textContent = fg.prices.bite.toLocaleString() + ' kg';
+
+            document.getElementById('btn-buy-burger').disabled = fg.kg < fg.prices.burger;
+            document.getElementById('btn-buy-steak').disabled = fg.kg < fg.prices.steak;
+            document.getElementById('btn-buy-feast').disabled = fg.kg < fg.prices.feast;
+            document.getElementById('btn-buy-bite').disabled = fg.kg < fg.prices.bite;
         }
 
         /* EXPORT/IMPORT CODE */
@@ -1859,11 +2528,17 @@
                 
                 if (parsedData && parsedData.username) {
                     appData = { ...appData, ...parsedData };
+                    if (!appData.guessGame) {
+                        appData.guessGame = { points: 0, targetNumber: Math.floor(Math.random() * 100) + 1, isLiked: false, isDisliked: false, isFavorite: false };
+                    }
                     if (!appData.capyGame) {
                         appData.capyGame = { money: 100, clickPower: 1, capyCount: 0, goldCount: 0, spaCount: 0, clickerLevel: 0, prices: { capy: 100, gold: 650, spa: 3200, clicker: 250 } };
                     }
                     if (!appData.capyGame.prices) {
                         appData.capyGame.prices = { capy: 100, gold: 650, spa: 3200, clicker: 250 };
+                    }
+                    if (!appData.fatGame) {
+                        appData.fatGame = { kg: 0, clickPower: 1, burgerCount: 0, steakCount: 0, feastCount: 0, biteLevel: 0, prices: { burger: 50, steak: 300, feast: 1500, bite: 100 }, isLiked: false, isDisliked: false, isFavorite: false };
                     }
                     applyDataToUI();
                     saveToLocalStorage();
