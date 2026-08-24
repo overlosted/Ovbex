@@ -617,7 +617,7 @@ onAuthStateChanged(auth, async (user)=>{
     }else{
       $("ob-avatar-preview").src = user.photoURL || DEFAULT_AVATAR;
       $("ob-name-input").value = user.displayName || "";
-      obSelectedFile = null;
+      obAvatarData = null;
       screen("screen-onboarding");
     }
   }catch(e){
