@@ -442,7 +442,7 @@
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js";
 import {
-  getAuth, GoogleAuthProvider, signInWithRedirect, getRedirectResult, onAuthStateChanged, signOut, updateProfile
+  getAuth, GoogleAuthProvider, signInWithPopup, onAuthStateChanged, signOut, updateProfile
 } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-auth.js";
 import {
   getFirestore, doc, getDoc, setDoc, updateDoc, addDoc, collection, query, orderBy, limit,
@@ -570,17 +570,35 @@ function setMyProfileCache(data){
 const googleProvider = new GoogleAuthProvider();
 googleProvider.setCustomParameters({ prompt: "select_account" });
 
-$("btn-google-signin").addEventListener("click", async ()=>{
-  try{
-    await signInWithRedirect(auth, googleProvider);
-  }catch(e){
-    showToast("Sign-in failed. Please try again.");
-  }
-});
+// Google blocks OAuth sign-in entirely inside an iframe (security policy) — no code workaround exists.
+// If this page is embedded, sign-in must happen in a real top-level tab.
+const isEmbedded = (() => { try { return window.top !== window.self; } catch(e){ return true; } })();
+if(isEmbedded){
+  const zone = document.querySelector("#screen-login .login-tagline");
+  const openBtn = document.createElement("button");
+  openBtn.className = "btn-secondary";
+  openBtn.textContent = "Open in a new tab to sign in";
+  openBtn.style.marginTop = "4px";
+  openBtn.addEventListener("click", ()=> window.open(window.location.href, "_blank"));
+  zone.insertAdjacentElement("afterend", openBtn);
+}
 
-// Surface any redirect-sign-in errors (e.g. blocked popups/redirect issues) without blocking app load.
-getRedirectResult(auth).catch((e)=>{
-  if(e && e.code && e.code !== "auth/no-auth-event") showToast("Sign-in failed. Please try again.");
+$("btn-google-signin").addEventListener("click", async ()=>{
+  if(isEmbedded){
+    window.open(window.location.href, "_blank");
+    return;
+  }
+  try{
+    await signInWithPopup(auth, googleProvider);
+  }catch(e){
+    // Some browsers log harmless Cross-Origin-Opener-Policy warnings around popup close
+    // detection; they don't necessarily mean sign-in failed. Only alert on real failures.
+    const benign = ["auth/popup-closed-by-user", "auth/cancelled-popup-request"];
+    if(!benign.includes(e.code)){
+      console.warn("Google sign-in error:", e);
+      showToast("Sign-in failed. Please try again.");
+    }
+  }
 });
 
 onAuthStateChanged(auth, async (user)=>{
