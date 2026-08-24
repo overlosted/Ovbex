@@ -442,7 +442,7 @@
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-app.js";
 import {
-  getAuth, GoogleAuthProvider, signInWithPopup, onAuthStateChanged, signOut, updateProfile
+  getAuth, GoogleAuthProvider, signInWithRedirect, getRedirectResult, onAuthStateChanged, signOut, updateProfile
 } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-auth.js";
 import {
   getFirestore, doc, getDoc, setDoc, updateDoc, addDoc, collection, query, orderBy, limit,
@@ -572,10 +572,15 @@ googleProvider.setCustomParameters({ prompt: "select_account" });
 
 $("btn-google-signin").addEventListener("click", async ()=>{
   try{
-    await signInWithPopup(auth, googleProvider);
+    await signInWithRedirect(auth, googleProvider);
   }catch(e){
-    if(e.code !== "auth/popup-closed-by-user") showToast("Sign-in failed. Please try again.");
+    showToast("Sign-in failed. Please try again.");
   }
+});
+
+// Surface any redirect-sign-in errors (e.g. blocked popups/redirect issues) without blocking app load.
+getRedirectResult(auth).catch((e)=>{
+  if(e && e.code && e.code !== "auth/no-auth-event") showToast("Sign-in failed. Please try again.");
 });
 
 onAuthStateChanged(auth, async (user)=>{
