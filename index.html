@@ -621,12 +621,13 @@ onAuthStateChanged(auth, async (user)=>{
       screen("screen-onboarding");
     }
   }catch(e){
-    console.error("Profile loading error:", e);
-    const code = e?.code || "";
-    if(code === "permission-denied" || code === "failed-precondition"){
-      showToast("Couldn't load your profile. Check your Firebase settings.");
+    console.error("Profile load failed:", e.code, e.message, e);
+    if(e.code === "permission-denied"){
+      showToast("Firestore blocked the read (permission-denied). Fix your Security Rules — see console for details.");
+    }else if(e.code === "unavailable"){
+      showToast("Can't reach Firestore right now. Check your connection and try again.");
     }else{
-      showToast("Something went wrong loading your profile.");
+      showToast("Something went wrong loading your profile (" + (e.code || e.message) + ").");
     }
     screen("screen-login");
   }
@@ -662,7 +663,8 @@ $("ob-continue-btn").addEventListener("click", async ()=>{
     setMyProfileCache(profileData);
     enterApp();
   }catch(e){
-    showToast("Could not save your profile. Try again.");
+    console.error("Profile save failed:", e.code, e.message, e);
+    showToast("Could not save your profile" + (e.code ? " (" + e.code + ")" : "") + ". Try again.");
     btn.disabled = false; btn.textContent = "Continue";
   }
 });
