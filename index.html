@@ -621,7 +621,13 @@ onAuthStateChanged(auth, async (user)=>{
       screen("screen-onboarding");
     }
   }catch(e){
-    showToast("Something went wrong loading your profile.");
+    console.error("Profile loading error:", e);
+    const code = e?.code || "";
+    if(code === "permission-denied" || code === "failed-precondition"){
+      showToast("Couldn't load your profile. Check your Firebase settings.");
+    }else{
+      showToast("Something went wrong loading your profile.");
+    }
     screen("screen-login");
   }
 });
