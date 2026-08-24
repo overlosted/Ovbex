@@ -398,10 +398,10 @@
     <div class="modal-content">
       <div id="np-upload-zone" class="upload-zone">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="9" cy="9" r="2"/><path d="M21 15l-5-5L5 21"/></svg>
-        <div class="uz-title">Add a photo or video</div>
-        <div class="uz-sub">Click to browse your files</div>
-        <input type="file" id="np-file-input" accept="image/*,video/*" class="hidden">
+        <div class="uz-title">Add a photo (optional)</div>
+        <div class="uz-sub">Click to browse your files, or skip and just write something</div>
       </div>
+      <input type="file" id="np-file-input" accept="image/*" class="hidden">
       <div id="np-preview-wrap" class="media-preview hidden"></div>
       <div class="np-fields">
         <input type="text" id="np-title-input" maxlength="80" placeholder="Post name (optional)">
@@ -448,9 +448,6 @@ import {
   getFirestore, doc, getDoc, setDoc, updateDoc, addDoc, collection, query, orderBy, limit,
   onSnapshot, arrayUnion, arrayRemove, increment, serverTimestamp
 } from "https://www.gstatic.com/firebasejs/12.18.0/firebase-firestore.js";
-import {
-  getStorage, ref, uploadBytes, getDownloadURL
-} from "https://www.gstatic.com/firebasejs/12.18.0/firebase-storage.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyC_mdxjtaNVeQNCzoJFSGCeWSMp-1Wjow4",
@@ -464,10 +461,45 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
-const db = getStorageSafeFirestore();
-function getStorageSafeFirestore(){ return getFirestore(app); }
-const storage = getStorage(app);
+const db = getFirestore(app);
 try{ /* analytics is optional, skip if blocked */ } catch(e){}
+
+/* ---------------- image compression (no Storage needed, images live in Firestore as base64) ---------------- */
+function loadImageFromFile(file){
+  return new Promise((resolve, reject)=>{
+    const url = URL.createObjectURL(file);
+    const img = new Image();
+    img.onload = () => { URL.revokeObjectURL(url); resolve(img); };
+    img.onerror = () => { URL.revokeObjectURL(url); reject(new Error("load_failed")); };
+    img.src = url;
+  });
+}
+async function compressImage(file, maxDim, maxChars){
+  const img = await loadImageFromFile(file);
+  const qualities = [0.85, 0.72, 0.6, 0.48, 0.36, 0.25, 0.18];
+  let dim = maxDim;
+  let best = null;
+  while(dim >= 160){
+    let w = img.width, h = img.height;
+    if(w > dim || h > dim){
+      if(w > h){ h = Math.round(h * dim / w); w = dim; }
+      else { w = Math.round(w * dim / h); h = dim; }
+    }
+    const canvas = document.createElement("canvas");
+    canvas.width = w; canvas.height = h;
+    const ctx = canvas.getContext("2d");
+    ctx.drawImage(img, 0, 0, w, h);
+    for(const q of qualities){
+      const dataURL = canvas.toDataURL("image/jpeg", q);
+      if(!best || dataURL.length < best.length) best = dataURL;
+      if(dataURL.length <= maxChars) return dataURL;
+    }
+    dim = Math.round(dim * 0.7);
+  }
+  // couldn't hit the target budget exactly — return the smallest version we managed
+  if(best) return best;
+  throw new Error("too_large");
+}
 
 const DEFAULT_AVATAR = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='50' fill='%232f3336'/%3E%3Ccircle cx='50' cy='40' r='18' fill='%2371767b'/%3E%3Cpath d='M20 88c4-24 20-34 30-34s26 10 30 34' fill='%2371767b'/%3E%3C/svg%3E";
 
@@ -572,13 +604,21 @@ onAuthStateChanged(auth, async (user)=>{
 });
 
 /* ---------------- onboarding ---------------- */
-let obSelectedFile = null;
+let obAvatarData = null; // compressed base64 data URL, or null to keep google photo
 $("ob-avatar-preview").parentElement.addEventListener("click", ()=> $("ob-avatar-input").click());
-$("ob-avatar-input").addEventListener("change", e=>{
+$("ob-avatar-input").addEventListener("change", async e=>{
   const f = e.target.files[0];
   if(!f) return;
-  obSelectedFile = f;
-  $("ob-avatar-preview").src = URL.createObjectURL(f);
+  if(!f.type.startsWith("image/")){ showToast("Please choose an image file."); return; }
+  const prevSrc = $("ob-avatar-preview").src;
+  try{
+    const dataURL = await compressImage(f, 400, 220000);
+    obAvatarData = dataURL;
+    $("ob-avatar-preview").src = dataURL;
+  }catch(err){
+    $("ob-avatar-preview").src = prevSrc;
+    showToast("That photo is too large. Try a different one.");
+  }
 });
 $("ob-continue-btn").addEventListener("click", async ()=>{
   const name = $("ob-name-input").value.trim();
@@ -586,15 +626,10 @@ $("ob-continue-btn").addEventListener("click", async ()=>{
   const btn = $("ob-continue-btn");
   btn.disabled = true; btn.textContent = "Setting up...";
   try{
-    let photoURL = currentUser.photoURL || "";
-    if(obSelectedFile){
-      const r = ref(storage, `avatars/${currentUser.uid}`);
-      await uploadBytes(r, obSelectedFile);
-      photoURL = await getDownloadURL(r);
-    }
-    const profileData = { displayName: name, photoURL: photoURL || "", bio: "", createdAt: serverTimestamp() };
+    const photoURL = obAvatarData || currentUser.photoURL || "";
+    const profileData = { displayName: name, photoURL, bio: "", createdAt: serverTimestamp() };
     await setDoc(doc(db,"users",currentUser.uid), profileData);
-    try{ await updateProfile(currentUser, { displayName: name, photoURL: photoURL || "" }); }catch(e){}
+    try{ await updateProfile(currentUser, { displayName: name }); }catch(e){}
     setMyProfileCache(profileData);
     enterApp();
   }catch(e){
@@ -636,19 +671,27 @@ $("pm-signout-btn").addEventListener("click", async ()=>{
 });
 
 /* ---------------- settings ---------------- */
-let setSelectedFile = null;
+let setAvatarData = null; // compressed base64 data URL if user picked a new photo
 function populateSettings(){
-  setSelectedFile = null;
+  setAvatarData = null;
   $("set-avatar-preview").src = myProfile.photoURL || DEFAULT_AVATAR;
   $("set-name-input").value = myProfile.displayName || "";
   $("set-bio-input").value = myProfile.bio || "";
 }
 $("set-avatar-preview").parentElement.addEventListener("click", ()=> $("set-avatar-input").click());
-$("set-avatar-input").addEventListener("change", e=>{
+$("set-avatar-input").addEventListener("change", async e=>{
   const f = e.target.files[0];
   if(!f) return;
-  setSelectedFile = f;
-  $("set-avatar-preview").src = URL.createObjectURL(f);
+  if(!f.type.startsWith("image/")){ showToast("Please choose an image file."); return; }
+  const prevSrc = $("set-avatar-preview").src;
+  try{
+    const dataURL = await compressImage(f, 400, 220000);
+    setAvatarData = dataURL;
+    $("set-avatar-preview").src = dataURL;
+  }catch(err){
+    $("set-avatar-preview").src = prevSrc;
+    showToast("That photo is too large. Try a different one.");
+  }
 });
 $("set-save-btn").addEventListener("click", async ()=>{
   const name = $("set-name-input").value.trim();
@@ -657,15 +700,10 @@ $("set-save-btn").addEventListener("click", async ()=>{
   const btn = $("set-save-btn");
   btn.disabled = true; const oldTxt = btn.textContent; btn.textContent = "Saving...";
   try{
-    let photoURL = myProfile.photoURL || "";
-    if(setSelectedFile){
-      const r = ref(storage, `avatars/${currentUser.uid}`);
-      await uploadBytes(r, setSelectedFile);
-      photoURL = await getDownloadURL(r);
-    }
+    const photoURL = setAvatarData || myProfile.photoURL || "";
     const updated = { displayName: name, photoURL, bio };
     await setDoc(doc(db,"users",currentUser.uid), updated, { merge: true });
-    try{ await updateProfile(currentUser, { displayName: name, photoURL }); }catch(e){}
+    try{ await updateProfile(currentUser, { displayName: name }); }catch(e){}
     setMyProfileCache({ ...myProfile, ...updated });
     $("nav-avatar").src = photoURL || DEFAULT_AVATAR;
     $("pm-name").textContent = name;
@@ -710,9 +748,7 @@ function postHTML(p){
   const liked = Array.isArray(p.likes) && p.likes.includes(currentUser.uid);
   const likeCount = Array.isArray(p.likes) ? p.likes.length : 0;
   const commentCount = p.commentCount || 0;
-  const mediaEl = p.mediaType === "video"
-    ? `<video src="${esc(p.mediaURL)}" controls playsinline></video>`
-    : `<img src="${esc(p.mediaURL)}" alt="Post media">`;
+  const mediaEl = `<img src="${p.mediaURL}" alt="Post media">`;
   return `
   <article class="post" data-id="${p.id}">
     <img class="post-avatar" src="${author.photoURL || DEFAULT_AVATAR}" onerror="this.src='${DEFAULT_AVATAR}'" alt="">
@@ -756,9 +792,13 @@ $("feed-list").addEventListener("click", async (e)=>{
 });
 
 /* ---------------- new post ---------------- */
-let npSelectedFile = null;
+let npMediaData = null; // compressed base64 data URL, ready to save straight to Firestore
+function updatePublishState(){
+  const hasText = $("np-caption-input").value.trim().length > 0 || $("np-title-input").value.trim().length > 0;
+  $("np-publish-btn").disabled = !npMediaData && !hasText;
+}
 $("btn-new-post").addEventListener("click", ()=>{
-  npSelectedFile = null;
+  npMediaData = null;
   $("np-file-input").value = "";
   $("np-title-input").value = "";
   $("np-caption-input").value = "";
@@ -766,53 +806,69 @@ $("btn-new-post").addEventListener("click", ()=>{
   $("np-preview-wrap").classList.add("hidden");
   $("np-preview-wrap").innerHTML = "";
   $("np-upload-zone").classList.remove("hidden");
+  setUploadZoneState("idle");
   $("np-publish-btn").disabled = true;
   $("np-publish-btn").textContent = "Publish";
   openModal("modal-newpost");
 });
+function setUploadZoneState(state){
+  const zone = $("np-upload-zone");
+  if(state === "processing"){
+    zone.innerHTML = `<div class="spinner" style="margin:0 auto 12px;"></div><div class="uz-title">Processing photo...</div><div class="uz-sub">Just a second</div>`;
+  }else{
+    zone.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="9" cy="9" r="2"/><path d="M21 15l-5-5L5 21"/></svg>
+      <div class="uz-title">Add a photo (optional)</div><div class="uz-sub">Click to browse your files, or skip and just write something</div>`;
+  }
+}
 $("np-upload-zone").addEventListener("click", ()=> $("np-file-input").click());
-$("np-file-input").addEventListener("change", e=>{
+$("np-file-input").addEventListener("change", async e=>{
   const f = e.target.files[0];
   if(!f) return;
-  if(!f.type.startsWith("image/") && !f.type.startsWith("video/")){
-    showToast("Please choose an image or video file."); return;
+  if(!f.type.startsWith("image/")){
+    showToast("Please choose an image file."); return;
   }
-  npSelectedFile = f;
-  const url = URL.createObjectURL(f);
-  const wrap = $("np-preview-wrap");
-  wrap.innerHTML = f.type.startsWith("video/")
-    ? `<video src="${url}" controls playsinline></video><button class="mp-remove" id="np-remove-media"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M6 6l12 12M18 6 6 18"/></svg></button>`
-    : `<img src="${url}" alt="Preview"><button class="mp-remove" id="np-remove-media"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M6 6l12 12M18 6 6 18"/></svg></button>`;
-  wrap.classList.remove("hidden");
-  $("np-upload-zone").classList.add("hidden");
-  $("np-publish-btn").disabled = false;
-  $("np-remove-media").addEventListener("click", (e2)=>{
-    e2.stopPropagation();
-    npSelectedFile = null;
-    $("np-file-input").value = "";
-    wrap.classList.add("hidden"); wrap.innerHTML = "";
-    $("np-upload-zone").classList.remove("hidden");
-    $("np-publish-btn").disabled = true;
-  });
+  setUploadZoneState("processing");
+  try{
+    const dataURL = await compressImage(f, 1400, 900000);
+    npMediaData = dataURL;
+    const wrap = $("np-preview-wrap");
+    wrap.innerHTML = `<img src="${dataURL}" alt="Preview"><button class="mp-remove" id="np-remove-media"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M6 6l12 12M18 6 6 18"/></svg></button>`;
+    wrap.classList.remove("hidden");
+    $("np-upload-zone").classList.add("hidden");
+    updatePublishState();
+    $("np-remove-media").addEventListener("click", (e2)=>{
+      e2.stopPropagation();
+      npMediaData = null;
+      $("np-file-input").value = "";
+      wrap.classList.add("hidden"); wrap.innerHTML = "";
+      setUploadZoneState("idle");
+      $("np-upload-zone").classList.remove("hidden");
+      updatePublishState();
+    });
+  }catch(err){
+    showToast("That photo is too large. Try a different one.");
+  }finally{
+    setUploadZoneState("idle");
+  }
 });
 $("np-caption-input").addEventListener("input", e=>{
   $("np-char-count").textContent = e.target.value.length;
+  updatePublishState();
 });
+$("np-title-input").addEventListener("input", updatePublishState);
 $("np-publish-btn").addEventListener("click", async ()=>{
-  if(!npSelectedFile){ showToast("Add a photo or video first."); return; }
+  const caption = $("np-caption-input").value.trim();
+  const title = $("np-title-input").value.trim();
+  if(!npMediaData && !caption && !title){ showToast("Write something or add a photo."); return; }
   const btn = $("np-publish-btn");
   btn.disabled = true; btn.textContent = "Publishing...";
   try{
-    const mediaType = npSelectedFile.type.startsWith("video/") ? "video" : "image";
-    const path = `posts/${currentUser.uid}/${Date.now()}_${npSelectedFile.name}`;
-    const r = ref(storage, path);
-    await uploadBytes(r, npSelectedFile);
-    const mediaURL = await getDownloadURL(r);
     await addDoc(collection(db,"posts"), {
       uid: currentUser.uid,
-      title: $("np-title-input").value.trim(),
-      caption: $("np-caption-input").value.trim(),
-      mediaURL, mediaType,
+      title,
+      caption,
+      mediaURL: npMediaData || "",
+      mediaType: npMediaData ? "image" : "",
       likes: [],
       commentCount: 0,
       createdAt: serverTimestamp()
